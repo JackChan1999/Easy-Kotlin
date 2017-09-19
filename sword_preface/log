@@ -1,0 +1,24 @@
+2017-08-02 11:38:08.830  INFO 2756 --- [       runner-0] o.s.boot.SpringApplication               : Starting application on jacks-MacBook-Air.local with PID 2756 (started by jack in /Users/jack/easyspringboot)
+2017-08-02 11:38:08.878  INFO 2756 --- [       runner-0] o.s.boot.SpringApplication               : No active profile set, falling back to default profiles: default
+2017-08-02 11:38:09.439  INFO 2756 --- [       runner-0] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@46d431f2: startup date [Wed Aug 02 11:38:09 CST 2017]; root of context hierarchy
+2017-08-02 11:38:12.629  INFO 2756 --- [       runner-0] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2017-08-02 11:38:12.665  INFO 2756 --- [       runner-0] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2017-08-02 11:38:12.668  INFO 2756 --- [       runner-0] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2017-08-02 11:38:12.873  INFO 2756 --- [ost-startStop-1] org.apache.catalina.loader.WebappLoader  : Unknown loader org.springframework.boot.cli.compiler.ExtendedGroovyClassLoader$DefaultScopeParentClassLoader@1d89db1e class org.springframework.boot.cli.compiler.ExtendedGroovyClassLoader$DefaultScopeParentClassLoader
+2017-08-02 11:38:12.938  INFO 2756 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2017-08-02 11:38:12.938  INFO 2756 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3499 ms
+2017-08-02 11:38:13.203  INFO 2756 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2017-08-02 11:38:13.217  INFO 2756 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2017-08-02 11:38:13.218  INFO 2756 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2017-08-02 11:38:13.218  INFO 2756 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2017-08-02 11:38:13.218  INFO 2756 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2017-08-02 11:38:13.920  INFO 2756 --- [       runner-0] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@46d431f2: startup date [Wed Aug 02 11:38:09 CST 2017]; root of context hierarchy
+2017-08-02 11:38:14.158  INFO 2756 --- [       runner-0] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/hello]}" onto public java.lang.String HelloController.hello()
+2017-08-02 11:38:14.176  INFO 2756 --- [       runner-0] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-08-02 11:38:14.181  INFO 2756 --- [       runner-0] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-08-02 11:38:14.241  INFO 2756 --- [       runner-0] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-08-02 11:38:14.241  INFO 2756 --- [       runner-0] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-08-02 11:38:14.325  INFO 2756 --- [       runner-0] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-08-02 11:38:15.181  INFO 2756 --- [       runner-0] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2017-08-02 11:38:15.303  INFO 2756 --- [       runner-0] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http)
+2017-08-02 11:38:15.315  INFO 2756 --- [       runner-0] o.s.boot.SpringApplication               : Started application in 8.261 seconds (JVM running for 72.986)
