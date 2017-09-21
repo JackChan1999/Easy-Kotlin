@@ -5,41 +5,39 @@
 
 本章就让我们一起来学习一下 Kotlin中 DSL的相关内容。
 
-
 我们在上一章中已经看到了在 Android 中使用下面这样的 嵌套DSL 风格的代码来替代 XML 式风格的视图文件
 
 ```
-        UI {
-            // AnkoContext
+UI {
+    // AnkoContext
 
-            verticalLayout {
-                padding = dip(30)
-                var title = editText {
-                    // editText 视图
-                    id = R.id.todo_title
-                    hintResource = R.string.title_hint
-                }
-
-                var content = editText {
-                    id = R.id.todo_content
-                    height = 400
-                    hintResource = R.string.content_hint
-                }
-                button {
-                    // button 视图
-                    id = R.id.todo_add
-                    textResource = R.string.add_todo
-                    textColor = Color.WHITE
-                    setBackgroundColor(Color.DKGRAY)
-                    onClick { _ -> createTodoFrom(title, content) }
-                }
-            }
+    verticalLayout {
+        padding = dip(30)
+        var title = editText {
+            // editText 视图
+            id = R.id.todo_title
+            hintResource = R.string.title_hint
         }
+
+        var content = editText {
+            id = R.id.todo_content
+            height = 400
+            hintResource = R.string.content_hint
+        }
+        button {
+            // button 视图
+            id = R.id.todo_add
+            textResource = R.string.add_todo
+            textColor = Color.WHITE
+            setBackgroundColor(Color.DKGRAY)
+            onClick { _ -> createTodoFrom(title, content) }
+        }
+    }
+}
 ```
 相比 XML 风格的 DSL（XML 本质上讲也是一种 DSL），明显使用原生的编程语言（例如Kotlin）DSL 风格更加简单干净，也更加自由灵活。
 
 Kotlin DSL 的编程风格是怎样的呢？以及其背后实现的原理是怎样的呢？下面就让我一起来探讨一下。
-
 
 ## DSL 是什么
 
@@ -53,7 +51,6 @@ DSL 简单讲就是对一个特定问题 (受限的表达能力) 的方案模型
 
 DSL 只是问题解决方案模型的外部封装，这个模型可能是一个 API 库，也可能是一个完整的框架等等。DSL 提供了思考特定领域问题的模型语言，这使得我们可以更加简单高效地来解决问题。DSL 聚焦一个特定的领域，简单易懂，功能极简但完备。DSL 让我们理解和使用模型更加简易。
 
-
 DSL 有内部 DSL 跟外部 DSL 之分。简单讲就是，像 Gradle、Anko 等都是我们使用通用编程语言（Java 和 Kotlin）创建的内部DSL， 
 
 ### 内部DSL
@@ -64,9 +61,6 @@ DSL 有内部 DSL 跟外部 DSL 之分。简单讲就是，像 Gradle、Anko 等
 
 根据Martin Fowler和Eric Evans的观点，框架或者程序库的API是否满足内部DSL的关键特征之一就是它是否有一个流畅（fluent）的接口。这样，你就能够用短小的对象表达式去组织一个原本很长的表达式，使它读起来更加自然。
 
-
-
-
 ### 外部DSL
 
 外部DSL跟通用编程语言（GPL）类似，但是外部DSL更加专注于特定领域。
@@ -76,7 +70,6 @@ DSL 有内部 DSL 跟外部 DSL 之分。简单讲就是，像 Gradle、Anko 等
 大多数情况下，外部DSL可以转换为一种与核心应用程序的操作环境相兼容的资源，也可以转换为用于构建核心应用的通用目的编程语言。例如，Hibernate中使用的对象-关系映射文件，就是由外部DSL转换为资源的实例。
 
 提示：关于 DSL 的详细介绍可以参考：《领域特定语言》（Martin Fowler）这本书。
-
 
 ## Kotlin 的 DSL 特性支持
 
@@ -93,9 +86,6 @@ DSL 有内部 DSL 跟外部 DSL 之分。简单讲就是，像 Gradle、Anko 等
 |--------|------------------------|---------------|
 |UI| fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit):AnkoContext<T>|android.support.v4.app.Fragment的扩展函数; 入参 init 是一个带接收者的函数字面值, 我们直接传入的是一个 Lambda 表达式|
 |verticalLayout|inline fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout| android.view.ViewManager的扩展函数      |
-
-
-
 
 ## 使用kotlinx.html DSL 写前端代码
 
@@ -169,7 +159,6 @@ repositories {
     text-align: center;
 }
 ```
-
 
 dsl.js 文件内容如下
 ```
@@ -310,9 +299,7 @@ ${hello}
 
 ```
 
-
 然后，启动运行 SpringBoot 应用，浏览器访问  http://127.0.0.1:8888/hello ， 我们可以看到如下输出界面：
-
 
 ![螢幕快照 2017-07-23 03.53.07.png](http://upload-images.jianshu.io/upload_images/1233356-f36aff0846fa2d8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -321,10 +308,6 @@ ${hello}
 使用 Kotlin DSL 来写 HTML 代码的情况将完全不一样了，我们将重拾前后端集成编码的乐趣（不再是模板引擎套前端 HTML，各种奇怪的 #、<#>、${} 模板语言标签），我们直接把 更加优雅简单的 DSL 风格的HTML 代码搬到了后端，同时HTML中的元素将直接跟后端的数据无缝交互，而完成这些的只是 Kotlin（当然，相应领域的 DSL 基本语义模型还是要学习一下）。
 
 提示：本节项目源码： https://github.com/EasyKotlin/chapter14_kotlin_dsl
-
-
-
-
 
 ## 实现一个极简的http DSL
 
@@ -336,15 +319,11 @@ OkHttp 是一个成熟且强大的网络库，在Android源码中已经使用OkH
 
 提示： 更多关于OkHttp 的使用可参考: http://square.github.io/okhttp/
 
-
-
 ### 创建 Kotlin Gradle 项目
 
 我们首先使用 IDEA 创建 Kotlin Gradle 项目
 
-
 ![螢幕快照 2017-07-23 18.43.04.png](http://upload-images.jianshu.io/upload_images/1233356-d17ee2c191075c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 然后，在 build.gradle 里面配置依赖
 
@@ -368,7 +347,6 @@ repositories {
 ### RxKotlin
 
 ReactiveX是Reactive Extensions的缩写，一般简写为Rx，最初是LINQ的一个扩展，由微软的架构师Erik Meijer领导的团队开发，在2012年11月开源。
-
 
 Rx扩展了观察者模式用于支持数据和事件序列。Rx是一个编程模型，目标是提供一致的编程接口，帮助开发者更方便的处理异步I/O（非阻塞）数据流。
 
@@ -395,15 +373,9 @@ Rx库支持.NET、JavaScript和C++ 。Rx近几年越来越流行，现在已经�
 |Elixir| [reaxive](https://github.com/alfert/reaxive)：https://github.com/alfert/reaxive
 |Dart| [RxDart](https://github.com/ReactiveX/rxdart)：https://github.com/ReactiveX/rxdart
 
-
-
-
-
 Rx的大部分语言库由ReactiveX这个组织负责维护。Rx 比较流行的库有RxJava/RxJS/Rx.NET等，当然未来RxKotlin也必将更加流行。
 
-
 提示： Rx 的社区网站是： http://reactivex.io/ 。 Github 地址：https://github.com/ReactiveX/
-
 
 ### Http请求对象封装类
 
@@ -444,8 +416,6 @@ HttpRequestWrapper的成员变量和函数说明如下表
 | fail|请求失败的函数变量|
 |fun success(onSuccess: (String) -> Unit)|请求成功回调函数|
 |fun error(onError: (Throwable) -> Unit)|请求失败回调函数|
-
-
 
 ### http 执行引擎
 
@@ -502,7 +472,6 @@ public interface Emitter<T> {
 
 这里，我们通过调用onNext方法，把 OkHttp 请求之后的响应对象Response 作为正常值发射出去。
 
-
 然后我们再创建一个数据接收源：一个观察者（Observer）
 
 ```
@@ -536,8 +505,6 @@ sender.subscribe(receiver)
 
 这种模式可以极大地简化并发操作，因为它创建了一个处于待命状态的观察者，在未来某个时刻响应 sender 的通知，而不需要阻塞等待 sender 发射数据。这个很像协程中的通道编程模型。
 
-
-
 ### DSL主函数 ajax
 
  我们的ajax DSL主函数设计如下：
@@ -569,7 +536,6 @@ fun ajax(init: HttpRequestWrapper.() -> Unit) {
     doCall(wrap)
 }
 ```
-
 
 我们在实际应用的时候，可以直接把 init 写成Lambda 表达式的形式，因为接收者类型HttpRequestWrapper 可以从上下文推断出来。
 
@@ -647,7 +613,6 @@ class KAjaxTest {
         }
     }
 
-
     @Test fun testHttpPost() {
         var json = JSONObject()
         json.put("name", "Kotlin DSL Http")
@@ -667,7 +632,6 @@ class KAjaxTest {
             }
         }
     }
-
 
     @Test fun testLambda() {
         val testUrl = "https://www.baidu.com"
@@ -694,19 +658,9 @@ class KAjaxTest {
 
 本节工程源码： https://github.com/EasyKotlin/chatper14_kotlin_dsl_http
 
-
-
-
 ## 本章小结
 
 相比于Java，Kotlin对函数式编程的支持更加友好。Kotlin 的扩展函数和高阶函数（Lambda 表达式），为定义Kotlin DSL提供了核心的特性支持。
 
 使用DSL的代码风格，可以让我们的程序更加直观易懂、简洁优雅。如果使用Kotlin来开发项目的话，我们完全可以去尝试一下。
-
-
-
-
-
-
-
 

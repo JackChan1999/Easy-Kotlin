@@ -3,15 +3,12 @@
 
 > 值就是函数，函数就是值。所有函数都消费函数，所有函数都生产函数。
 
-
 "函数式编程", 又称泛函编程, 是一种"编程范式"（programming paradigm），也就是如何编写程序的方法论。它的基础是 λ 演算（lambda calculus）。λ演算可以接受函数当作输入（参数）和输出（返回值）。
-
 
 和指令式编程相比，函数式编程的思维方式更加注重函数的计算。它的主要思想是把问题的解决方案写成一系列嵌套的函数调用。
 
 就像在OOP中，一切皆是对象，编程的是由对象交合创造的世界；
 在FP中，一切皆是函数，编程的世界是由函数交合创造的世界。
-
 
 函数式编程中最古老的例子莫过于1958年被创造出来的Lisp了。Lisp由约翰·麦卡锡（John McCarthy，1927-2011）在1958年基于λ演算所创造，采用抽象数据列表与递归作符号演算来衍生人工智能。较现代的例子包括Haskell、ML、Erlang等。现代的编程语言对函数式编程都做了不同程度的支持，例如：JavaScript, Coffee Script，PHP，Perl，Python, Ruby, C# , Java 等等（这将是一个不断增长的列表）。
 
@@ -19,15 +16,11 @@
 
 函数作为Kotlin中的一等公民，可以像其他对象一样作为函数的输入与输出。关于对函数式编程的支持，相对于Scala的学院派风格，Kotlin则是纯的的工程派：实用性、简洁性上都要比Scala要好。
 
-
 本章我们来一起学习函数式编程以及在Kotlin中使用函数式编程的相关内容。
 
 ## 8.1 函数式编程概述
 
-
 ![螢幕快照 2017-07-10 00.01.21.png](http://upload-images.jianshu.io/upload_images/1233356-cf2dacf5ac6dbf2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 函数式编程思想是一个非常古老的思想。我们简述如下：
 
@@ -39,33 +32,13 @@
 
 - 1933，λ 演算。 Church 在 1933 年搞出来一套以纯λ演算为基础的逻辑，以期对数学进行形式化描述。 λ 演算和递归函数理论就是函数式编程的基础。
 
-
 - 1936，确定性问题（decision problem，德文 Entscheidungsproblem (发音 [ɛntˈʃaɪ̯dʊŋspʁoˌbleːm]）。 Alan Turing 和 Alonzo Church，两人在同在1936年独立给出了否定答案。
 
   1935-1936这个时间段上，我们有了三个有效计算模型：通用图灵机、通用递归函数、λ可定义。Rosser 1939 年正式确认这三个模型是等效的。
 
-
 - 1953-1957，FORTRAN (FORmula TRANslating )，John Backus。1952 年 Halcombe Laning 提出了直接输入数学公式的设想，并制作了 GEORGE编译器演示该想法。受这个想法启发，1953 年 IBM 的 John Backus 团队给 IBM 704 主机研发数学公式翻译系统。第一个 FORTRAN (FORmula TRANslating 的缩写)编译器 1957.4 正式发行。FORTRAN 程序的代码行数比汇编少20倍。FORTRAN 的成功，让很多人认识到直接把代数公式输入进电脑是可行的，并开始渴望能用某种形式语言直接把自己的研究内容输入到电脑里进行运算。John Backus 在1970年代搞了 FP 语言，1977 年发表。虽然这门语言并不是最早的函数式编程语言，但他是 Functional Programming 这个词儿的创造者， 1977 年他的图灵奖演讲题为[“Can Programming Be Liberated From the von Neumann Style? A Functional Style and its Algebra of Programs”]
 
 - 1956， LISP， John McCarthy。John McCarthy 1956年在 Dartmouth一台 IBM 704 上搞人工智能研究时，就想到要一个代数列表处理(algebraic list processing)语言。他的项目需要用某种形式语言来编写语句，以记录关于世界的信息，而他感觉列表结构这种形式挺合适，既方便编写，也方便推演。于是就创造了LISP。正因为是在 IBM 704 上开搞的，所以 LISP 的表处理函数才会有奇葩的名字： car/cdr 什么的。其实是取 IBM704 机器字的不同部分，c=content of，r=register number, a=address part, d=decrement part 。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### 8.1.1 面向对象编程（OOP）与面向函数编程（FOP）
 
@@ -89,16 +62,9 @@ GoF所著的《设计模式-可复用面向对象软件的基础》从面向对�
 
 简单的说，就是一句话：允许将子类类型的指针赋值给父类类型的指针。而我们在OOP中的那么多的设计模式，其实就是在OOP的多态性的约束规则下，对这些函数指针的调用模式的总结。
 
-
-
 很多设计模式，在函数式编程中都可以用高阶函数来代替实现：
 
-
 ![螢幕快照 2017-07-10 00.03.39.png](http://upload-images.jianshu.io/upload_images/1233356-02c37d3a6cb40264.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
-
 
 #### 面向函数编程（FOP）
 
@@ -125,8 +91,6 @@ FP通过函数组合来构造其逻辑系统。FP倾向于把软件分解为其�
 
 而在OOP中，很多所谓面向对象设计模式（design pattern），都是因为面向对象语言没有first-class function（对应的是多态性），所以导致了每个函数必须被包在一个对象里面（受约束的函数指针）才能传递到其它地方。
 
-
-
 #### 匀称的数据结构 + 匀称的算法
 
 在面向对象式的编程中，一切皆是对象（偏重数据结构、数据抽象，轻算法）。我们把它叫做：胖数据结构-瘦算法（FDS-TA）。
@@ -142,7 +106,6 @@ FP通过函数组合来构造其逻辑系统。FP倾向于把软件分解为其�
 我们用一幅图来简单说明：
 
 ![OOP vs FP (2).png](http://upload-images.jianshu.io/upload_images/1233356-d304c2665b511dfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 #### 函数与映射
 
@@ -163,7 +126,6 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 }
 ```
 
-
 ### 8.1.2 函数式编程基本特性 
 
 在经常被引用的论文 “Why Functional Programming Matters” 中，作者 John Hughes 说明了模块化是成功编程的关键，而函数编程可以极大地改进模块化。
@@ -180,7 +142,6 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 - 引用透明性。
 - 没有副作用。
 
-
 ### 8.1.3 组合与范畴
 
 函数式编程的本质是函数的组合，组合的本质是范畴（Category）。
@@ -196,7 +157,6 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 #### 范畴的对象
 
 这里的对象可以看成是一类东西，例如数学上的群，环，以及有理数，无理数等都可以归为一个对象。对应到编程语言里，可以理解为一个类型，比如说整型，布尔型等。
-
 
 #### 态射
 态射指的是一种映射关系，简单理解，态射的作用就是把一个对象 A 里的值 a 映射为 另一个对象 B 里的值 b  = f(a)，这就是映射的概念。
@@ -215,10 +175,6 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 
 -  同一律：对结构中的每一个对象 A,  必须存在一个单位态射 Ia: A -> A， 对于单位态射，显然，对任意其它态射 f,  有 f.I = f。
 
-
-
-
-
 在范畴论里另外研究的重点是范畴与范畴之间的关系，就正如对象与对象之间有态射一样，范畴与范畴之间也存在映射关系，从而可以将一个范畴映射为另一个范畴，这种映射在范畴论中叫作函子(functor），具体来说，对于给定的两个范畴 A 和 B, 函子的作用有两个:
 
 - 将范畴 A 中的对象映射到范畴 B 中的对象。
@@ -228,17 +184,11 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 
 而我们的函数式编程探究的问题与思想理念可以说是跟范畴论完全吻合。如果把函数式编程的整个的世界看做一个对象，那么FP真正搞的事情就是建立通过函数之间的映射关系，来构建这样一个美丽的编程世界。
 
-
 很多问题的解决（证明）其实都不涉及具体的（数据）结构，而完全可以只依赖映射之间的组合运算(composition)来搞定。这就是函数式编程的核心思想。
-
 
 如果我们把`程序`看做图论里面的一张图G，`数据结构`当作是图G的节点Node（数据结构，存储状态）， 而`算法`逻辑就是这些节点Node之间的Edge (数据映射，Mapping)， 那么这整幅图 `G(N,E) ` 就是一幅美妙的抽象逻辑之塔的 `映射图` ， 也就是我们编程创造的世界：
 
-
 ![image.png](http://upload-images.jianshu.io/upload_images/1233356-230323b88fce27cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
 
 #### 函数是"第一等公民"
 
@@ -256,8 +206,6 @@ fun fp(f: (X)->Y, p: (Y)->Z) : Z {
 2
 3
 ```
-
-
 
 #### 高阶函数（Higher order Function）
 
@@ -288,10 +236,7 @@ fun main(args: Array<String>) {
 
 图示如下：
 
-
 ![螢幕快照 2017-07-07 00.58.15.png](http://upload-images.jianshu.io/upload_images/1233356-6bd8659e597b74b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 这里的
 
@@ -311,12 +256,7 @@ fun <String, Int, Boolean> compose(f: (Int) -> Boolean, g: (String) -> Int): (St
 
 另外，高阶函数满足结合律：
 
-
-
 ![螢幕快照 2017-07-09 21.50.15.png](http://upload-images.jianshu.io/upload_images/1233356-4f1f3b24aaa4ac5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
 
 #### λ演算 （Lambda calculus 或者 λ-calculus）
 
@@ -328,7 +268,6 @@ fun <String, Int, Boolean> compose(f: (Int) -> Boolean, g: (String) -> Int): (St
 
 λ演算强调的是变换规则的运用，这里的变换规则本质上就是函数映射。
 Lambda 表达式（Lambda Expression） 是 λ演算 的一部分。
-
 
 λ演算中一切皆函数，全体λ表达式构成Λ空间，λ表达式为Λ空间到Λ空间的函数。
 
@@ -355,7 +294,6 @@ Lambda 表达式（Lambda Expression） 是 λ演算 的一部分。
 
 ```
 
-
 使用λ演算定义布尔值：
 ```
 TRUE = λ x. λ y. x
@@ -363,27 +301,11 @@ FALSE = λ x. λ y. y
 ```
 用图示如下：
 
-
 ![螢幕快照 2017-07-08 19.12.12.png](http://upload-images.jianshu.io/upload_images/1233356-09460980ff21ed42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
 
 ![螢幕快照 2017-07-08 19.12.37.png](http://upload-images.jianshu.io/upload_images/1233356-b0d358c8e56dc089.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
 在λ演算中只有函数，一门编程语言中的数据类型，比如boolean、number、list等，都可以使用纯λ演算来实现。我们不用去关心数据的值是什么，重点是我们能对这个值做什么操作（apply function）。
-
-
-
-
-
-
-
-
-
-
 
 使用λ演算定义一个恒等函数I ：
 
@@ -404,7 +326,6 @@ FALSE = λ x. λ y. y
 ```
 
 对 I 而言任何一个 x 都是它的不动点(即对某个函数 f(x) 存在这样的一个输入 x，使得函数的输出仍旧等于输入的 x 。形式化的表示即为  f(x) = x )。
-
 
 再例如，下面的 λ 表达式表示将x映射为 x+1 :
 
@@ -435,16 +356,11 @@ FALSE = λ x. λ y. y
 2
 ```
 
-
-
 在一些古老的编程语言中，lambda表达式还是比较接近lambda演算的表达式的。在现代程序语言中的lambda表达式，只是取名自lambda演算，已经与原始的lambda演算有很大差别了。例如：
-
 
 ![image.png](http://upload-images.jianshu.io/upload_images/1233356-07044fcd613e1c1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
 在Javascript里没有任何语法专门代表lambda,  只写成这样的嵌套函数`function{ return function{...} }`。
-
 
 #### 函数柯里化（Currying）
 
@@ -506,18 +422,11 @@ lambdaCurryAdd(1)(2)  // 输出 3
 
 ```
 
-
-
-
-
-
-
 这个做法其实来源于最早的 lambda calculus 的设计。因为 lambda calculus 的函数都只有一个参数，所以为了能够表示多参数的函数， Haskell Curry （数学家和逻辑学家），发明了这个方法。 
 
 不过在编码实践中，Currying 的工程实用性、简洁性上不是那么的友好。大量使用 Currying，会导致代码可读性降低，复杂性增加，并且还可能因此引起意想不到的错误。 所以在我们的讲求工程实践性能的Kotlin语言中，
 
 古老而美丽的理论，也许能够给我带来思想的启迪，但是在工程实践中未必那么理想。
-
 
 #### 闭包（Closure）
 
@@ -532,7 +441,6 @@ lambdaCurryAdd(1)(2)  // 输出 3
 
 Lambda表达式可以表示闭包。
 
-
 #### 惰性计算
 
 除了高阶函数、闭包、Lambda表达式的概念，FP 还引入了惰性计算的概念。惰性计算（尽可能延迟表达式求值）是许多函数式编程语言的特性。惰性集合在需要时提供其元素，无需预先计算它们，这带来了一些好处。首先，您可以将耗时的计算推迟到绝对需要的时候。其次，您可以创造无限个集合，只要它们继续收到请求，就会继续提供元素。第三，map 和 filter 等函数的惰性使用让您能够得到更高效的代码（请参阅 参考资料 中的链接，加入由 Brian Goetz 组织的相关讨论）。
@@ -540,9 +448,6 @@ Lambda表达式可以表示闭包。
 在惰性计算中，表达式不是在绑定到变量时立即计算，而是在求值程序需要产生表达式的值时进行计算。
 
 一个惰性计算的例子是生成无穷 Fibonacci 列表的函数，但是对 第 n 个Fibonacci 数的计算相当于只是从可能的无穷列表中提取一项。
-
-
-
 
 #### 递归函数
 
@@ -644,7 +549,6 @@ fun fibonacci(n: Int): Int {
 
 外篇： Scheme中的递归写法
 
-
 因为Scheme 程序中充满了一对对嵌套的小括号，这些嵌套的符号体现了最基本的数学思想——递归。所以，为了多维度的来理解递归，我们给出Scheme中的递归写法：
 
 ```
@@ -654,8 +558,6 @@ fun fibonacci(n: Int): Int {
       (if (= n 0)
           1
           (* n (factorial (- n 1))))))
-
-
 
   (define fibonacci
     (lambda (n)
@@ -670,8 +572,6 @@ fun fibonacci(n: Int): Int {
 Lambda演算和函数式语言的计算模型天生较为接近，Lambda表达式一般是这些语言必备的基本特性。
 
 Scheme是Lisp方言，遵循极简主义哲学，有着独特的魅力。Scheme的一个主要特性是可以像操作数据一样操作函数调用。
-
-
 
 #### Y组合子(Y - Combinator)
 
@@ -718,9 +618,7 @@ fact(10)
 3628800
 ```
 
-
 ![螢幕快照 2017-07-09 04.30.06.png](http://upload-images.jianshu.io/upload_images/1233356-88255d35335bb5b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 这个Y函数相当绕脑。要是在Clojure（JVM上的Lisp方言）中，这个Y函数实现如下：
 
@@ -773,9 +671,7 @@ $ coffee
 coffee>
 ```
 
-
 对CoffeeScript感兴趣的读者，可以参考：http://coffee-script.org/。
-
 
 但是，这个Y组合子 要是 使用 OOP 语言编程范式， 就要显得复杂许多。为了更加深刻地认识OOP 与 FP编程范式，我们使用Java 8 以及 Kotlin 的实例来说明。这里使用Java给出示例的原因，是为了给出Kotlin与Java语言上的对比，在下一章节中，我们将要学习Kotlin与Java的互操作。
 
@@ -903,7 +799,6 @@ package com.easy.kotlin
  *
  */
 
-
 object YCombinatorKt {
 
     fun yCombinator(f: Lambda<Lambda<*>>): Lambda<Lambda<*>> {
@@ -961,31 +856,23 @@ object YCombinatorKt {
 ```
 关于Y combinator的更多实现，可以参考：https://gist.github.com/Jason-Chen-2017/88e13b63fa5b7c612fddf999739964b0 ； 另外，关于Y combinator的原理介绍，推荐看《The Little Schemer 》这本书。
 
-
 从上面的例子，我们可以看出OOP中的对接口以及多态类型，跟FP中的函数的思想表达的，本质上是一个东西，这个东西到底是什么呢？我们姑且称之为“编程之道”罢！
-
 
 Y combinator 给我们提供了一种方法，让我们在一个只支持first-class函数，但是没有内建递归的编程语言里完成递归。所以Y combinator给我们展示了一个语言完全可以定义递归函数，即使这个语言的定义一点也没提到递归。它给我们展示了一件美妙的事：仅仅函数式编程自己，就可以让我们做到我们从来不认为可以做到的事（而且还不止这一个例子）。
 
-
 严谨而精巧的lambda演算体系，从最基本的概念“函数”入手，创造出一个绚烂而宏伟的世界，这不能不说是人类思维的骄傲。
-
 
 #### 没有"副作用"
 
-
 ![螢幕快照 2017-07-10 00.02.11.png](http://upload-images.jianshu.io/upload_images/1233356-91bb4b9f0c01c594.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 所谓"副作用"（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。
 
 函数式编程强调没有"副作用"，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。
 
-
 函数式编程的动机，一开始就是为了处理运算（computation），不考虑系统的读写（I/O）。"语句"属于对系统的读写操作，所以就被排斥在外。
 
 当然，实际应用中，不做I/O是不可能的。因此，编程过程中，函数式编程只要求把I/O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。
-
 
 函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。
 
@@ -995,7 +882,6 @@ Y combinator 给我们提供了一种方法，让我们在一个只支持first-c
 
 函数程序通常还加强引用透明性，即如果提供同样的输入，那么函数总是返回同样的结果。就是说，表达式的值不依赖于可以改变值的全局状态。这样我们就可以从形式上逻辑推断程序行为。因为表达式的意义只取决于其子表达式而不是计算顺序或者其他表达式的副作用。这有助于我们来验证代码正确性、简化算法，有助于找出优化它的方法。
 
-
 ## 8.2 在Kotlin中使用函数式编程
 
 好了亲，前文中我们在函数式编程的世界里遨游了一番，现在我们把思绪收回来，放到在Kotlin中的函数式编程中来。
@@ -1003,7 +889,6 @@ Y combinator 给我们提供了一种方法，让我们在一个只支持first-c
 严格的面向对象的观点，使得很多问题的解决方案变得较为笨拙。为了将一行有用的代码包装到Runnable或者Callable 这两个Java中最流行的函数式示例中，我们不得不去写五六行模板范例代码。为了让事情简单化（在Java 8中，增加Lambda表达式的支持），我们在Kotlin中使用普通的函数来替代函数式接口。事实上，函数式编程中的函数，比C语言中的函数或者Java中的方法都要强大的多。
 
 在Kotlin中，支持函数作为一等公民。它支持高阶函数、Lambda表达式等。我们不仅可以把函数当做普通变量一样传递、返回，还可以把它分配给变量、放进数据结构或者进行一般性的操作。它们可以是未经命名的，也就是匿名函数。我们也可以直接把一段代码丢到 `{}`中，这就是闭包。
-
 
 在前面的章节中，其实我们已经涉及到一些关于函数的地方，我们将在这里系统地学习一下Kotlin的函数式编程。
 
@@ -1020,7 +905,6 @@ fun double(x: Int): Int {
     return 2*x
 }
 ```
-
 
 #### 函数用法
 
@@ -1159,7 +1043,6 @@ add() = 0
 add(1) = 1
 add(1, 1) = 2
 
-
 另外，覆盖带默认参数的函数时，总是使用与基类型方法相同的默认参数值。
 当覆盖一个带有默认参数值的方法时，签名中不带默认参数值：
 
@@ -1222,7 +1105,6 @@ reformat(str,
 reformat(str, wordSeparator = '_')
 ```
 
-
 #### 可变数量的参数（Varargs）
 
 函数的参数（通常是最后一个）可以用 `vararg` 修饰符标记：
@@ -1241,7 +1123,6 @@ fun <T> asList(vararg ts: T): List<T> {
 ``` kotlin
 val list = asList(1, 2, 3)
 ```
-
 
 ### 8.2.5 函数返回类型
 
@@ -1287,9 +1168,6 @@ fun double(x: Int): Int = x * 2
 fun double(x: Int) = x * 2
 ```
 
-
-
-
 ### 8.2.7 函数作用域
 
 在 Kotlin 中函数可以在文件顶层声明，这意味着你不需要像一些语言如 Java、C# 或 Scala 那样创建一个类来保存一个函数。此外除了顶层函数，Kotlin 中函数也可以声明在局部作用域、作为成员函数以及扩展函数。
@@ -1315,11 +1193,7 @@ println("sum(1,2,3) = ${sum(0, 1, 2, 3)}")
 ```
 输出：
 
-
 sum(1,2,3) = 6
-
-
-
 
 #### 成员函数
 
@@ -1336,7 +1210,6 @@ class Sample() {
 ``` kotlin
 Sample().foo() // 创建类 Sample 实例并调用 foo
 ```
-
 
 ### 8.2.8 泛型函数
 
@@ -1388,9 +1261,7 @@ public inline fun <T> Iterable<T>.filter(predicate: (T) -> Boolean): List<T> {
         }))
 ```
 
-
 ### 8.2.11 Lambda 表达式
-
 
 我们也可以直接使用更简单的Lambda表达式来实现一个predicate函数：
 
@@ -1492,7 +1363,6 @@ I = 3
 J = 20
 ```
 
-
 ### 8.2.13  带接收者的函数字面值
 
 Kotlin 提供了使用指定的 _接收者对象_ 调用函数字面值的功能。
@@ -1523,9 +1393,6 @@ fun html(init: HTML.() -> Unit): HTML { // HTML.()中的HTML是接受者类型
 }
 ```
 
-
-
-
 测试代码：
 
 ```
@@ -1537,7 +1404,6 @@ fun html(init: HTML.() -> Unit): HTML { // HTML.()中的HTML是接受者类型
 输出：HTML BODY
 
 使用这个特性，我们可以构建一个HTML的DSL语言。
-
 
 ### 8.2.14 具体化的类型参数
 
@@ -1618,18 +1484,13 @@ private fun findFixPoint(): Double {
 
 要符合 tailrec 修饰符的条件的话，函数必须将其自身调用作为它执行的最后一个操作。在递归调用后有更多代码时，不能使用尾递归，并且不能用在 try/catch/finally 块中。尾部递归在 JVM 后端中支持。
 
-
 Kotlin 还为集合类引入了许多扩展函数。例如，使用 map() 和 filter() 函数可以流畅地操纵数据，具体的函数的使用以及示例我们已经在 集合类 章节中介绍。
 
-
 ## 本章小结
-
 
 本章我们一起学习了函数式编程的简史、Lambda演算、Y组合子与递归等核心函数式的编程思想等相关内容。然后重点介绍了在Kotlin中如何使用函数式风格编程，其中重点介绍了Kotlin中函数的相关知识，以及高阶函数、Lambda表达式、闭包等核心语法，并给出相应的实例说明。
 
 我们将在下一章 中介绍Kotlin的 轻量级线程：协程（Coroutines）的相关知识，我们将看到在Kotlin中，程序的逻辑可以在协程中顺序地表达，而底层库会为我们解决其异步性。
-
-
 
 本章示例代码工程：
 

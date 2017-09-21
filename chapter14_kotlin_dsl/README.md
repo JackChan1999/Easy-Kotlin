@@ -5,41 +5,39 @@
 
 本章就让我们一起来学习一下 使用 Kotlin 创建 DSL的相关内容。
 
-
 我们在上一章中已经看到了在 Android 中使用下面这样的 嵌套DSL 风格的代码来替代 XML 式风格的视图文件
 
 ```
-        UI {
-            // AnkoContext
+UI {
+    // AnkoContext
 
-            verticalLayout {
-                padding = dip(30)
-                var title = editText {
-                    // editText 视图
-                    id = R.id.todo_title
-                    hintResource = R.string.title_hint
-                }
-
-                var content = editText {
-                    id = R.id.todo_content
-                    height = 400
-                    hintResource = R.string.content_hint
-                }
-                button {
-                    // button 视图
-                    id = R.id.todo_add
-                    textResource = R.string.add_todo
-                    textColor = Color.WHITE
-                    setBackgroundColor(Color.DKGRAY)
-                    onClick { _ -> createTodoFrom(title, content) }
-                }
-            }
+    verticalLayout {
+        padding = dip(30)
+        var title = editText {
+            // editText 视图
+            id = R.id.todo_title
+            hintResource = R.string.title_hint
         }
+
+        var content = editText {
+            id = R.id.todo_content
+            height = 400
+            hintResource = R.string.content_hint
+        }
+        button {
+            // button 视图
+            id = R.id.todo_add
+            textResource = R.string.add_todo
+            textColor = Color.WHITE
+            setBackgroundColor(Color.DKGRAY)
+            onClick { _ -> createTodoFrom(title, content) }
+        }
+    }
+}
 ```
 相比 XML 风格的 DSL（XML 本质上讲也是一种 DSL），明显使用原生的编程语言（例如Kotlin）DSL 风格更加简单干净，也更加自由灵活。
 
 Kotlin DSL 的编程风格是怎样的呢？以及其背后实现的原理是怎样的呢？下面就让我一起来探讨一下。
-
 
 ## DSL 是什么
 
@@ -51,11 +49,9 @@ DSL 只是问题解决方案模型的外部封装，这个模型可能是一个 
 
 提示：关于 DSL 的详细介绍可以参考：《领域特定语言》（Martin Fowler）这本书。
 
-
 ## Kotlin 的 DSL 特性支持
 
 扩展（eXtension）特性。
-
 
 ## 实现一个极简的 DSL
 
@@ -183,7 +179,6 @@ post请求也是类似的，只不过多了body
         }
 ```
 
-
 ## 使用kotlinx.html DSL 写前端代码
 
 kotlinx.html是可在 Web 应用程序中用于构建 HTML 的 DSL。 它可以作为传统模板系统（例如JSP、FreeMarker等）的替代品。
@@ -215,10 +210,7 @@ repositories {
 
 我们来写一个极简百度首页示例。这个页面界面如下图所示
 
-
 ![螢幕快照 2017-07-23 03.39.07.png](http://upload-images.jianshu.io/upload_images/1233356-83268d6804614e91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 前端 HTML 代码：
 
@@ -260,7 +252,6 @@ repositories {
     text-align: center;
 }
 ```
-
 
 dsl.js 文件内容如下
 ```
@@ -401,9 +392,7 @@ ${hello}
 
 ```
 
-
 然后，启动运行 SpringBoot 应用，浏览器访问  http://127.0.0.1:8888/hello ， 我们可以看到如下输出界面：
-
 
 ![螢幕快照 2017-07-23 03.53.07.png](http://upload-images.jianshu.io/upload_images/1233356-f36aff0846fa2d8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -415,17 +404,8 @@ ${hello}
 
 https://github.com/EasyKotlin/chapter14_kotlin_dsl
 
-
-
 ## 使用KotlinTest写测试代码
 
-
-
-
-
 ## 本章小结
-
-
-
 
 本章工程源码：

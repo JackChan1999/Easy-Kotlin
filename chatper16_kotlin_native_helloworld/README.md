@@ -5,20 +5,17 @@
 
 在前面的所有章节中，我们使用的 Kotlin 都是基于 JVM 的运行环境。本章我们将从  JVM 的运行环境中离开，走向直接编译生成原生机器码的系统编程的生态系统：Kotlin Native  。
 
-
 ## 16.1 Kotlin Native 简介 
 
 Kotlin Native利用LLVM来编译到机器码。Kotlin Native 主要是基于 LLVM后端编译器（Backend Compiler）来生成本地机器码。
 
 Kotlin Native 的设计初衷是为了支持在非JVM虚拟机平台环境的编程，如 ios、嵌入式平台等。同时支持与 C 互操作。
 
-
 ### 16.1.1 LLVM
 
 LLVM最初是Low Level Virtual Machine的缩写，定位是一个虚拟机，但是是比较底层的虚拟机。LLVM是构架编译器(compiler)的框架系统，以C++编写而成，用于优化以任意程序语言编写的程序的编译时间(compile-time)、链接时间(link-time)、运行时间(run-time)以及空闲时间(idle-time)，对开发者保持开放，并兼容已有脚本。
 
 LLVM的出现正是为了解决编译器代码重用的问题，LLVM一上来就站在比较高的角度，制定了LLVM IR这一中间代码表示语言。LLVM IR充分考虑了各种应用场景，例如在IDE中调用LLVM进行实时的代码语法检查，对静态语言、动态语言的编译、优化等。
-
 
 ### 16.1.2 支持平台
 
@@ -36,8 +33,6 @@ Kotlin Native现在已支持以下平台：
 
 这意味着我们可以在这些平台上愉快地开始体验了！目前Kotlin Native 已经发布的最新预发布版本是 v0.3 。
 
-
-
 ### 16.1.3 解释型语言与编译型语言
 
 编译型语言，是在程序执行之前有一个单独的编译过程，将程序翻译成机器语言，以后执行这个程序的时候，就不用再进行翻译了。例如，C/C++ 等都是编译型语言。
@@ -46,17 +41,13 @@ Kotlin Native现在已支持以下平台：
 
 虽然Java程序在运行之前也有一个编译过程，但是并不是将程序编译成机器语言，而是将它编译成字节码（可以理解为一个中间语言）。在运行的时候，由JVM将字节码再翻译成机器语言。
 
-
-
 ## 16.2 快速开始 Hello World
 
 ###  16.2.1 运行环境准备
 
 我们直接去 Github上面去下载 kotlin-native 编译器的软件包。下载地址是 ：https://github.com/JetBrains/kotlin-native/releases  。
 
-
 ![螢幕快照 2017-07-29 13.23.30.png](http://upload-images.jianshu.io/upload_images/1233356-18482ccb52840231.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 下载解压之后，我们可以看到 Kotlin Native 编译器 konan 的目录如下：
 ```
@@ -83,7 +74,6 @@ drwxr-xr-x@ 22 jack  staff    748  6 22 19:04 samples
 第1步，打开 File -> New -> Project  ，如下图所示
 
 ![螢幕快照 2017-07-29 13.35.12.png](http://upload-images.jianshu.io/upload_images/1233356-da70984a266be5b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 第2步，新建Gradle项目。我们直接在左侧栏中选择 Gradle，点击 Next 
 
@@ -120,7 +110,6 @@ src
     └── main.kt
 
 ```
-
 
 ###  16.2.4 C 代码文件
 
@@ -178,7 +167,6 @@ fun main(args: Array<String>) {
     (1..7).map(::fib).forEach(::println)
 }
 
-
 ```
 
 其中，`import kotlinor.*` 是 C 语言代码经过 clang 编译之后的C 的接口包路径，我们将在下面的 build.gradle 配置文件中的konanInterop中配置这个路径。
@@ -202,7 +190,6 @@ buildscript {
 ```
 
 这里我们添加了Gradle 构建 Kotlin Native 工程的 DSL 插件  kotlin-native-gradle-plugin:0.3 。这里的版本号，对应我们下载的 konan 编译器的版本号，我们使用的是 v0.3，所以这里我们也使用0.3版本的插件。这个插件发布在https://dl.bintray.com/jetbrains/kotlin-native-dependencies仓库里，所以我们在repositories里面添加了这个仓库。
-
 
 然后，我们应用插件 konan 
 
@@ -259,12 +246,6 @@ konanInterop 主要用来配置 Kotlin 调用 C 的接口。konanInterop 的配�
 |linkFiles|       与native stubs 链接的文件       |
 | dumpParameters  |  打印 Gradle 任务参数选项配置|
 
-
-
-
-
-
-
 其中，kotlinor.def 是Kotlin Native 与 C 语言互操作的配置文件，我们在kotlinor.def 里面配置 C 源码到 kotlin 的映射关系。这个文件内容如下
 
 kotlinor.def
@@ -287,15 +268,7 @@ konanInterop {
 }
 ```
 
-
-
 关于这个配置文件的解析原理可以参考 KonanPlugin.kt 文件的源码（https://github.com/JetBrains/kotlin-native/blob/master/tools/kotlin-native-gradle-plugin/src/main/kotlin/org/jetbrains/kotlin/gradle/plugin/KonanPlugin.kt）。
-
-
-
-
-
-
 
 ### 16.2.8  konanArtifacts 配置
 
@@ -319,7 +292,6 @@ konanArtifacts {
 (4) 处的nativeLibrary配置的是本地库文件。关于'src/c/cn_kotlinor.bc'文件的编译生成我们在下面讲。
 
 (5) 处的target 配置的是编译的目标平台，这里我们配置为 'macbook' 。
-
 
 关于konanArtifacts可选的配置如下所示
 
@@ -360,11 +332,7 @@ konanArtifacts {
    }
 ```
 
-
-
 konan 编译任务配置处理类是KonanCompileTask.kt （https://github.com/JetBrains/kotlin-native/blob/master/tools/kotlin-native-gradle-plugin/src/main/kotlin/org/jetbrains/kotlin/gradle/plugin/KonanCompileTask.kt）。
-
-
 
 ### 16.2.9 完整的 build.gradle 配置
 
@@ -373,7 +341,6 @@ konan 编译任务配置处理类是KonanCompileTask.kt （https://github.com/Je
 ```
 group 'com.easy.kotlin'
 version '1.0-SNAPSHOT'
-
 
 buildscript {
     repositories {
@@ -388,7 +355,6 @@ buildscript {
 }
 
 apply plugin: 'konan' // konan 就是用来编译 Kotlin 为 native 代码的插件
-
 
 konanInterop { // konanInterop 主要用来配置 Kotlin 调用 C 的接口
     ckotlinor {
@@ -408,12 +374,7 @@ konanArtifacts { //konanArtifacts 配置我们的项目
 
 ```
 
-
-
-
-
 提示：关于konan 插件详细配置文档：Gradle DSL https://github.com/JetBrains/kotlin-native/blob/master/GRADLE_PLUGIN.md
-
 
 ### 16.2.10 使用 clang 编译 C 代码
 
@@ -428,13 +389,7 @@ clang -std=c99 -c $1 -o $2 -emit-llvm
 ```
 我们将得到一个 cn_kotlinor.bc 库文件。
 
-
-
 提示：clang是一个C++编写、基于LLVM、发布于LLVM BSD许可证下的C/C++/Objective-C/Objective-C++编译器。它与GNU C语言规范几乎完全兼容。更多关于 clang 的内容可参考 ： http://clang.llvm.org/docs/index.html 。
-
-
-
-
 
 ### 16.2.11 配置 konan 编译器主目录
 最后，在执行 Gradle 构建之前，我们还需要指定konan 编译器主目录。我们在工程根目录下面新建 gradle.properties 这个属性配置文件，内容如下
@@ -446,7 +401,6 @@ konan.home=/Users/jack/soft/kotlin-native-macos-0.3
 ### 16.2.12 执行构建操作
 
 我们直接在 IDEA 右侧的 Gradle 工具栏点击Tasks ->build -> build 命令执行构建操作
-
 
 ![螢幕快照 2017-07-30 03.42.19.png](http://upload-images.jianshu.io/upload_images/1233356-3f59984a4276ed67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -508,7 +462,6 @@ build
 
 其中在 ckotlinor.kt中，我们可以看出 konan 编译器还为我们生成了 C 代码对应的 Kotlin 的接口
 
-
 ```
 @file:Suppress("UNUSED_EXPRESSION", "UNUSED_VARIABLE")
 package ckotlinor
@@ -542,11 +495,9 @@ fun fib(n: Int): Int {
 @SymbolName("ckotlinor_kni_fib")
 private external fun kni_fib(n: Int): Int
 
-
 ```
 
 我们在Kotlin 代码中，调用的就是这些映射到 C 中的函数接口。
-
 
 ### 16.2.12 执行 kexe 应用程序
 
@@ -591,7 +542,6 @@ chatper16_kotlin_native_helloworld$ build/konan/bin/KotlinorApp.kexe
 
 ```
 
-
 至此，我们完成了一次简单的Kotlin Native 与 C 语言互操作在系统级编程的体验之旅。
 
 我们看到，Kotlin Native仍然看重互操作性(Interoperability)。它能高效地调用C函数，甚至还能从C头文件自动生成了对应的Kotlin接口，发扬了JetBrains为开发者服务的良好传统！
@@ -599,12 +549,6 @@ chatper16_kotlin_native_helloworld$ build/konan/bin/KotlinorApp.kexe
 但是，在体验的过程中我们也发现整个过程比较手工化，显得比较繁琐（例如手工新建各种配置文件、手工使用 clang 编译C 代码等）。
 
 不过，Kotlin Native 的 Gradle 插件用起来还是相当不错的。相信未来 IDEA 会对 Kotlin Native 开发进行智能的集成，以方便系统编程的开发者更好更快的完成项目的配置以及开发编码工作。
-
-
-
-
-
-
 
 ## 16.3 Kotlin Native 编译器 konan 简介
 
@@ -654,9 +598,6 @@ $TIMECMD "$JAVACMD" "${java_opts[@]}" "${java_args[@]}" -cp "$KONAN_CLASSPATH" "
 
 我们可以看出，Kotlin Native 编译器 konan 的运行环境还是在 JVM 上，但是它生成的机器码的可执行程序是直接运行在对应的平台系统上（直接编译成机器语言）。
 
-
-
-
 #### konan目录
 
 konan目录是 Kotlin Native 编译器的核心实现部分。目录结构如下：
@@ -692,7 +633,6 @@ konan/
 
 我们可以看到在 `run_konan` 命令行 shell 中依赖了上面的这些 jar 包。上面的目录文件是 Mac OS 平台上的。
 
-
 对应的 Linux 平台上的konan目录文件如下
 
 ```
@@ -724,7 +664,6 @@ konan
 6 directories, 16 files
 ```
 
-
 Windows 平台上的 konan 目录文件如下
 ```
 kotlin-native-windows-0.3$ tree konan
@@ -755,8 +694,6 @@ konan
 6 directories, 16 files
 
 ```
-
-
 
 #### klib 目录
 
@@ -829,10 +766,7 @@ klib/
 
 上面的目录是 kotlin-native-macos-0.3 平台的版本。我们可以看出，在Mac OS上，我们可以使用 Kotlin Native 编译android_arm32、android_arm64、iphone、macbook等目标平台的机器码可执行的程序。
 
-
-
 另外，对应的 Linux 平台的目录文件如下
-
 
 ```
 kotlin-native-linux-0.3$ tree klib
@@ -954,15 +888,9 @@ klib/
 
 提示：MinGW，是Minimalist GNUfor Windows的缩写。它是一个可自由使用和自由发布的Windows特定头文件和使用GNU工具集导入库的集合，允许你在GNU/Linux和Windows平台生成本地的Windows程序而不需要第三方C运行时（C Runtime）库。MinGW 是一组包含文件和端口库，其功能是允许控制台模式的程序使用微软的标准C运行时（C Runtime）库（MSVCRT.DLL）,该库在所有的 NT OS 上有效，在所有的 Windows 95发行版以上的 Windows OS 有效，使用基本运行时，你可以使用 GCC 写控制台模式的符合美国标准化组织（ANSI）程序，可以使用微软提供的 C 运行时（C Runtime）扩展，与基本运行时相结合，就可以有充分的权利既使用 CRT（C Runtime）又使用 WindowsAPI功能。
 
-
-
-
-
 #### samples目录
  
 samples目录下面是官方给出的一些实例。关于这些实例的文档介绍以及源码工程是： https://github.com/JetBrains/kotlin-native/tree/master/samples 。想更加深入了解学习的同学可以参考。
-
-
 
 ## 本章小结
 
@@ -971,7 +899,6 @@ samples目录下面是官方给出的一些实例。关于这些实例的文档�
 现在我们可以把 Kotlin 像C 一样地直接编译成的机器码来运行，这样在 C 语言出现的地方（例如应用于嵌入式等对性能要求比较高的场景），Kotlin 也来了。Kotlin 将会在嵌入式系统和物联网、数据分析和科学计算、游戏开发、服务端开发和微服务等领域持续发力。
 
 Kotlin 整个语言的架构不可谓不宏大：上的了云端（服务端程序），下的了手机端（ Kotlin / Native ），写的了前端（JS，HTML DSL 等），嵌的了冰箱（Kotlin Native）。Kotlin 俨然已成为一门擅长多个领域的语言了。
-
 
 在互联网领域，目前在Web服务端应用开发、Android移动端开发是Kotlin 最活跃的领域。 Kotlin 将会越来越多地进入 Java 程序员们的视野， Java 程序员们会逐渐爱上 Kotlin 。
 

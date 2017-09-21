@@ -79,7 +79,6 @@ apply plugin: 'konan'
 
 该插件在dl.bintray.com仓库中，所以我们把这个仓库添加到构建仓库中。
 
-
 ### 16.2.4 配置 KotlinNative 运行环境
 
 我们在工程根目录下新建gradle.properties文件，里面添加konan.home的配置

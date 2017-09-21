@@ -26,7 +26,6 @@ Spring由于其繁琐的配置，一度被人认为“配置地狱”，各种XM
 
 其系统架构技术栈如下表所示:
 
-
 |编程语言|    Java，Kotlin|
 |-----------|------------------|
 | 数据库    |   MySQL , mysql-jdbc-driver, Spring data JPA,   |
@@ -91,9 +90,7 @@ Artifact：chapter11_kotlin_springboot
 21 directories, 8 files
 ```
 
-
 其中，Chapter11KotlinSpringbootApplication.kt是SpringBoot应用的入口启动类。
-
 
 ### 11.3.2 Gradle配置文件说明
 
@@ -137,7 +134,6 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -167,11 +163,6 @@ dependencies {
 |mysql-connector-java|Java的MySQL连接器库|
 |spring-boot-starter-test|测试启动器|
 
-
-
-
-
-
 ## 11.4 数据库层配置
 
 上面的模板工程，我们来直接运行main函数，会发现启动失败，控制台会输出如下报错信息：
@@ -189,7 +180,6 @@ Cannot determine embedded database driver class for database type NONE
 Action:
 
 If you want an embedded database please put a supported one on the classpath. If you have database settings to be loaded from a particular profile you may need to active it (no profiles are currently active).
-
 
 ```
 
@@ -224,8 +214,6 @@ spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.ImprovedNamingStrategy
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 ```
 
-
-
 再次运行启动类，控制台输出启动日志：
 ```
 ...
@@ -236,7 +224,6 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
                        | . \ (_) | |_| | | | | |   |_|
                        |_|\_\___/ \__|_|_|_| |_|
 
-
               _____            _             ____              _
              / ____|          (_)           |  _ \            | |
             | (___  _ __  _ __ _ _ __   __ _| |_) | ___   ___ | |_
@@ -245,7 +232,6 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
             |_____/| .__/|_|  |_|_| |_|\__, |____/ \___/ \___/ \__|
                    | |                  __/ |
                    |_|                 |___/
-
 
 2017-07-17 21:10:48.741  INFO 5062 --- [  restartedMain] c.Chapter11KotlinSpringbootApplicationKt : Starting Chapter11KotlinSpringbootApplicationKt on 192.168.1.6 with PID 5062 ...
 ...
@@ -268,9 +254,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 2017-07-17 21:11:04.232  INFO 5062 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http)
 2017-07-17 21:11:04.240  INFO 5062 --- [  restartedMain] c.Chapter11KotlinSpringbootApplicationKt : Started Chapter11KotlinSpringbootApplicationKt in 16.316 seconds (JVM running for 17.68)
 
-
 ```
-
 
 关于上面的日志，我们通过下面的表格作简要说明：
 
@@ -282,7 +266,6 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 |AnnotationMBeanExporter        : Bean with name 'dataSource' has been autodetected for JMX exposure ... Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource] |数据源Bean通过annotation注解注册MBean到JMX实现监控其运行状态
 |TomcatWebServer  : Tomcat started on port(s): 8000 (http)|SpringBoot默认内嵌了Tomcat，端口我们可以在application.properties中配置|
 |Started Chapter11KotlinSpringbootApplicationKt in 16.316 seconds (JVM running for 17.68)|SpringBoot应用启动成功|
-
 
 ## 11.5 Endpoint监控接口
 
@@ -379,13 +362,11 @@ management.security.enabled=false
     ]
   }
 
-
 ```
 
 可以看出，我们一行代码还没写，只是加了几行配置，SpringBoot已经自动配置初始化了这么多的Bean。我们再访问 http://127.0.0.1:8000/application/health 
 
 ```
-
 
 {
   "status": "UP",
@@ -405,11 +386,9 @@ management.security.enabled=false
 
 从上面我们可以看到一些应用的健康状态信息，例如：应用状态、磁盘空间、数据库状态等信息。
 
-
 ## 11.6 数据库实体类
 
 我们在上面已经完成了MySQL数据源的配置，下面我们来写一个实体类。新建`package com.easy.kotlin.chapter11_kotlin_springboot.entity` ，然后新建`Article`实体类：
-
 
 ```
 package com.easy.kotlin.chapter11_kotlin_springboot.entity
@@ -437,7 +416,6 @@ class Article {
     }
 
 }
-
 
 ```
 
@@ -472,14 +450,7 @@ class HttpApi {
 }
 ```
 
-
-
-
-
-
-
 我们这个是一个博客文章的简单实体类。再次重启运行应用，我们去MySQL的Schema: blog 里面去看，发现数据库自动生成了 Table: article , 它的表字段信息如下：
-
 
 | Field        | Type         | Null | Key | Default | Extra          |
 |-----------|-------------|------|-----|---------|----------------|
@@ -619,7 +590,6 @@ override fun findAll(): MutableList<Article>
 ```
 其中，注解@ResponseBody表示把方法返回值直接绑定到响应体（response body）。
 
-
 ## 11.9 启动初始化CommandLineRunner
 
 为了方便测试用，我们在SpringBoot应用启动的时候初始化几条数据到数据库里。Spring Boot 为我们提供了一个方法，通过实现接口 CommandLineRunner 来实现。这是一个函数式接口：
@@ -674,8 +644,6 @@ fun main(args: Array<String>) {
     SpringApplication.run(Chapter11KotlinSpringbootApplication::class.java, *args)
 }
 
-
-
 ```
 
 这里我们主要关注的是@SpringBootApplication注解，它包括三个注解，简单说明如下表：
@@ -686,15 +654,11 @@ fun main(args: Array<String>) {
 |@EnableAutoConfiguration  |表示SpringBoot程序启动时，启动Spring Boot默认的自动配置。|
 |@ComponentScan |表示程序启动时自动扫描当前包及子包下所有类。|
 
-
 ### 11.10.1 启动运行
 
 如果是在IDEA中运行，可以直接点击main函数运行，如下图所示：
 
-
 ![螢幕快照 2017-07-18 17.44.31.png](http://upload-images.jianshu.io/upload_images/1233356-5345520564c28ef0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 如果想在命令行运行，直接在项目根目录下运行命令：
 ```
@@ -710,7 +674,6 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 > :bootRun
 
 ```
-
 
 我们在浏览器中直接访问： http://127.0.0.1:8000/listAllArticle ， 可以看到类似如下输出：
 
@@ -756,9 +719,7 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 
 其中，`ModelAndView("list")`中的"list"表示视图文件的所在目录的相对路径。SpringBoot的默认的视图文件放在src/main/resources/templates目录。
 
-
 ## 11.12 模板引擎视图页面
-
 
 我们使用Freemarker模板引擎。我们在templates目录下新建一个list.ftl文件，内容如下：
 ```
@@ -796,14 +757,11 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 
 提示：关于Freemarker的详细语法可参考 http://freemarker.org/ 。
 
-
 ## 11.13 运行测试
 
 重启应用，浏览器访问 ： http://127.0.0.1:8000/listAllArticleView ，我们可以看到页面输出：
 
-
 ![螢幕快照 2017-07-18 23.52.35.png](http://upload-images.jianshu.io/upload_images/1233356-e4b99926e77c8e85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 到这里，我们已经完成了一个从数据库到前端页面的完整的一个极简的Web应用。
 
@@ -812,8 +770,6 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 ## 11.14 引入前端组件
 
 我们使用基于Bootstrap的前端UI库Flat UI。首先去Flat UI的首页：http://www.bootcss.com/p/flat-ui/ 下载zip包，加压后，放到我们的工程里，放置的目录是：src/main/resources/static 。如下图所示：
-
-
 
 ![螢幕快照 2017-07-19 01.12.49.png](http://upload-images.jianshu.io/upload_images/1233356-e2fdc39c3e814421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -851,7 +807,6 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 提示：更多的关于Spring Boot静态资源处理内容可以参考文章：
  http://www.jianshu.com/p/d127c4f78bb8
 
-
 然后，我们再把我们的文章列表布局优化一下：
 
 ```
@@ -883,9 +838,7 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 
 重新build工程，在此访问文章列表页，我们将看到一个比刚才漂亮多了的页面：
 
-
 ![螢幕快照 2017-07-19 00.39.20.png](http://upload-images.jianshu.io/upload_images/1233356-be7f570041c93704.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 考虑到头部的静态资源文件基本都是公共的代码，我们单独抽取到一个head.ftl文件中,  然后在list.ftl中直接这样引用：
 ```
@@ -938,7 +891,6 @@ Hibernate: insert into article (author, content, deleted_date, gmt_created, gmt_
 
 ```
 
-
 然后，再添加控制器请求转发。这里我们使用集成WebMvcConfigurerAdapter类，重写实现addViewControllers方法的方式来添加一个不带数据传输的，单纯的请求转发的跳转View的RequestMapping Controller：
 
 ```
@@ -955,7 +907,6 @@ class WebMvcConfig : WebMvcConfigurerAdapter() {
 这样前端浏览器来的请求addArticle会直接映射转发到视图addArticle.ftl文件渲染解析。
 
 重启应用，进入到我们的写文章的页面，如下图：
-
 
 ![螢幕快照 2017-07-19 01.39.34.png](http://upload-images.jianshu.io/upload_images/1233356-f5f5b344fca06ce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -1019,9 +970,7 @@ class WebMvcConfig : WebMvcConfigurerAdapter() {
 
 ![螢幕快照 2017-07-19 01.57.56.png](http://upload-images.jianshu.io/upload_images/1233356-919d3f34e099a57f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
 ![螢幕快照 2017-07-19 02.02.27.png](http://upload-images.jianshu.io/upload_images/1233356-5fdad0b0e7003d0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 ### 11.15.3 写文章的控制器层接口
 
@@ -1084,7 +1033,6 @@ $(function () {
         alert("保存失败！")
     }
 
-
 })
 
 ```
@@ -1127,16 +1075,11 @@ $(function () {
 
 现在我们的文章列表页面如下：
 
-
 ![螢幕快照 2017-07-19 03.34.46.png](http://upload-images.jianshu.io/upload_images/1233356-e9e3209a27d834c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 点击一篇文章标题，即可进入详情页：
 
-
-
 ![螢幕快照 2017-07-19 03.35.03.png](http://upload-images.jianshu.io/upload_images/1233356-932ce8d93e55ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 ## 11.16 添加Markdown支持
 
@@ -1180,10 +1123,7 @@ $(function () {
 
 这样，写文章的页面对应的textarea区域就变成了支持Markdown在线编辑+预览的功能了：
 
-
-
 ![螢幕快照 2017-07-19 04.55.57.png](http://upload-images.jianshu.io/upload_images/1233356-69d868caf6273e0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 ### 11.16.3 文章详情显示Markdown渲染
 下面我们来使我们的详情页也能支持Markdown的渲染显示。
@@ -1241,10 +1181,7 @@ $(function () {
 
 这样我们的详情页也支持了Markdown的渲染显示了：
 
-
 ![螢幕快照 2017-07-19 05.03.08.png](http://upload-images.jianshu.io/upload_images/1233356-5f87b5d126eaeac8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 ## 11.17 文章列表分页搜索
 
@@ -1286,7 +1223,6 @@ $(function () {
         </tbody>
     </table>
 ```
-
 
 ### 11.17.3 调用DataTable函数
 
@@ -1333,14 +1269,11 @@ $('#articlesDataTable').DataTable(dataTableOptions)
 
 再次看我们的文章列表页：
 
-
 ![螢幕快照 2017-07-19 05.23.21.png](http://upload-images.jianshu.io/upload_images/1233356-31ac4ac1bbb0fb5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 已经具备了分页、搜索、排序等功能了。
 
 到这里，我们的这个较为完整的极简博客站点应用基本就开发完成了。
-
 
 ## 11.18 Spring 5.0对Kotlin的支持
 
@@ -1370,7 +1303,6 @@ val context = GenericApplicationContext {
     registerBean { Bar(it.getBean<foo>()) }
 }
 ```
-
 
 ### 11.18.2  Spring Web 函数式 API
 
@@ -1417,7 +1349,6 @@ ${include("footer")}
 """
 ```
 
-
 ## 本章小结
 
 本章我们较为细致完整地介绍了使用Kotlin集成SpringBoot进行服务后端开发，并结合简单的前端开发，完成了一个极简的技术博客Web站点。我们可以看到，使用Kotlin结合Spring Boot、Spring MVC、JPA等Java框架的无缝集成，关键是大大简化了我们的代码。同时，在本章最后我们简单介绍了Spring 5.0中对Kotlin的支持诸多新特性，这些新特性令人惊喜。
@@ -1433,6 +1364,5 @@ ${include("footer")}
 未来Spring Framework 5.0 和 Kotlin 结合的开发实践更加值得我们期待。
 
 在下一章中我们将一起学习Kotlin 集成 Gradle 开发的相关内容。
-
 
 本章项目源码: https://github.com/EasyKotlin/chapter11_kotlin_springboot

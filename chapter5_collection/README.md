@@ -153,7 +153,6 @@ Please specify it explicitly.
 val list = listOf()
            ^
 
-
 ```
 
 因为这是一个泛型函数。关于泛型，我们将在下一章中介绍。
@@ -303,13 +302,11 @@ package kotlin.collections
 
 @SinceKotlin("1.1") public typealias RandomAccess = java.util.RandomAccess
 
-
 @SinceKotlin("1.1") public typealias ArrayList<E> = java.util.ArrayList<E>
 @SinceKotlin("1.1") public typealias LinkedHashMap<K, V> = java.util.LinkedHashMap<K, V>
 @SinceKotlin("1.1") public typealias HashMap<K, V> = java.util.HashMap<K, V>
 @SinceKotlin("1.1") public typealias LinkedHashSet<E> = java.util.LinkedHashSet<E>
 @SinceKotlin("1.1") public typealias HashSet<E> = java.util.HashSet<E>
-
 
 // also @SinceKotlin("1.1")
 internal typealias SortedSet<E> = java.util.SortedSet<E>
@@ -591,7 +588,6 @@ true
 java.lang.ArrayIndexOutOfBoundsException: 7
     at java.util.Arrays$ArrayList.get(Arrays.java:3841)
 
-
 ```
 
 另外，针对越界的处理，还有下面两个函数：
@@ -624,7 +620,6 @@ null
 >>> emptyList.first()
 java.util.NoSuchElementException: List is empty.
     at kotlin.collections.CollectionsKt___CollectionsKt.first(_Collections.kt:178)
-
 
 ```
 
@@ -708,8 +703,6 @@ null
 java.util.NoSuchElementException: List is empty.
     at kotlin.collections.CollectionsKt___CollectionsKt.last(_Collections.kt:340)
 
-
-
 ```
 
 #### `last(predicate: (T) -> Boolean): T`
@@ -761,8 +754,6 @@ java.lang.IllegalArgumentException: List has more than one element.
 >>> list.single()
 java.util.NoSuchElementException: List is empty.
     at kotlin.collections.CollectionsKt___CollectionsKt.single(_Collections.kt:469)
-
-
 
 ```
 
@@ -1273,7 +1264,6 @@ error: type mismatch: inferred type is (String) -> String but (String) -> Int wa
 list.sumBy({it})
            ^
 
-
 ```
 
 ### 5.3.6 过滤操作函数算子
@@ -1533,7 +1523,6 @@ public fun <T> List<T>.dropLast(n: Int): List<T> {
 >>> list.dropLast(-1)
 java.lang.IllegalArgumentException: Requested element count -1 is less than zero.
     at kotlin.collections.CollectionsKt___CollectionsKt.dropLast(_Collections.kt:573)
-
 
 ```
 
@@ -1839,7 +1828,6 @@ public fun <T> Iterable<Iterable<T>>.flatten(): List<T> {
 >>> programmer.groupBy({it.second}, {it.first})
 {C=[K&R, Linus], C++=[Bjar], Java=[James]}
 
-
 ```
 
 这里涉及到一个 二元组Pair 类，该类是Kotlin提供的用来处理二元数据组的。 可以理解成Map中的一个键值对，比如Pair(“key”,”value”) 等价于 “key” to “value”。
@@ -1909,7 +1897,6 @@ public fun <T> Iterable<T>.reversed(): List<T> {
 public fun <T> MutableList<T>.reverse(): Unit {
     java.util.Collections.reverse(this)
 }
-
 
 ```
 
@@ -2303,13 +2290,11 @@ package kotlin.collections
 
 @SinceKotlin("1.1") public typealias RandomAccess = java.util.RandomAccess
 
-
 @SinceKotlin("1.1") public typealias ArrayList<E> = java.util.ArrayList<E>
 @SinceKotlin("1.1") public typealias LinkedHashMap<K, V> = java.util.LinkedHashMap<K, V>
 @SinceKotlin("1.1") public typealias HashMap<K, V> = java.util.HashMap<K, V>
 @SinceKotlin("1.1") public typealias LinkedHashSet<E> = java.util.LinkedHashSet<E>
 @SinceKotlin("1.1") public typealias HashSet<E> = java.util.HashSet<E>
-
 
 // also @SinceKotlin("1.1")
 internal typealias SortedSet<E> = java.util.SortedSet<E>

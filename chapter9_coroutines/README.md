@@ -22,13 +22,11 @@
 
 > CPU密集型应用:多进程-->多线程 
 
-
 如果说多进程对于多CPU，多线程对应多核CPU，那么事件驱动和协程则是在充分挖掘不断提高性能的单核CPU的潜力。
 
 常见的有性能瓶颈的API (例如网络 IO、文件 IO、CPU 或 GPU 密集型任务等)，要求调用者阻塞（blocking）直到它们完成才能进行下一步。后来，我们又使用异步回调的方式来实现非阻塞，但是异步回调代码写起来并不简单。
 
 协程提供了一种避免阻塞线程并用更简单、更可控的操作替代线程阻塞的方法：协程挂起。
-
 
 协程主要是让原来要使用“异步+回调方式”写出来的复杂代码, 简化成可以用看似同步的方式写出来（对线程的操作进一步抽象）。这样我们就可以按串行的思维模型去组织原本分散在不同上下文中的代码逻辑，而不需要去处理复杂的状态同步问题。
 
@@ -42,9 +40,7 @@
 
 协程可以用来解决很多问题，比如nodejs的嵌套回调，Erlang以及Golang的并发模型实现等。
 
-
 实质上，协程（coroutine）是一种用户态的轻量级线程。它由协程构建器（launch coroutine builder）启动。
-
 
 下面我们通过代码实践来学习协程的相关内容。
 
@@ -64,8 +60,6 @@ compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-nio', version:
 compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-reactive', version: '0.16'
 ```
 
-
-
 我们使用Kotlin最新的1.1.3-2 版本:
 
 ```
@@ -79,7 +73,6 @@ buildscript {
 ```
 
 其中，kotlin-gradle-plugin是Kotlin集成Gradle的插件。
-
 
 另外，配置一下JCenter 的仓库:
 
@@ -95,22 +88,20 @@ repositories {
 
 运行下面的代码：
 ```
-    fun firstCoroutineDemo0() {
-        launch(CommonPool) {
-            delay(3000L, TimeUnit.MILLISECONDS)
-            println("Hello,")
-        }
-        println("World!")
-        Thread.sleep(5000L)
+fun firstCoroutineDemo0() {
+    launch(CommonPool) {
+        delay(3000L, TimeUnit.MILLISECONDS)
+        println("Hello,")
     }
+    println("World!")
+    Thread.sleep(5000L)
+}
 ```
 你将会发现输出：
 ```
 World!
 Hello,
 ```
-
-
 
 上面的这段代码：
 ```
@@ -196,15 +187,11 @@ launch函数有3个入参：context、start、block，这些函数参数分别�
 
 这个CommonPool对象类是CoroutineContext的子类型。它们的类型集成层次结构如下：
 
-
-
 ![螢幕快照 2017-07-12 13.14.54.png](http://upload-images.jianshu.io/upload_images/1233356-a219643430e8f474.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 9.1.5 挂起函数
 
 代码块中的`delay(3000L, TimeUnit.MILLISECONDS)`函数，是一个用suspend关键字修饰的函数，我们称之为挂起函数。挂起函数只能从协程代码内部调用，普通的非协程的代码不能调用。
-
-
 
 挂起函数只允许由协程或者另外一个挂起函数里面调用, 例如我们在协程代码中调用一个挂起函数，代码示例如下：
 
@@ -225,9 +212,6 @@ launch函数有3个入参：context、start、block，这些函数参数分别�
     }
 ```
 
-
-
-
 如果我们用Java中的Thread类来写类似功能的代码，上面的代码可以写成这样：
 ```
     fun threadDemo0() {
@@ -245,8 +229,6 @@ launch函数有3个入参：context、start、block，这些函数参数分别�
 World!
 Hello,
 
-
-
 另外， 我们不能使用Thread来启动协程代码。例如下面的写法编译器会报错：
 
 ```
@@ -262,7 +244,6 @@ Hello,
         Thread.sleep(5000L)
     }
 ```
-
 
 ## 9.2  桥接 阻塞和非阻塞
 
@@ -426,8 +407,6 @@ c2 is active: true  false
     }
 ```
 
-
-
 将会输出：
 
 ```
@@ -448,7 +427,6 @@ c1 is active: false  isCompleted: true
 c2 is active: false  isCompleted: true
 
 ```
-
 
 通常，良好的代码风格我们会把一个单独的逻辑放到一个独立的函数中，我们可以重构上面的代码如下：
 
@@ -480,7 +458,6 @@ c2 is active: false  isCompleted: true
     }
 ```
 可以看出，我们这里的fc1, fc2函数是suspend fun。
-
 
 ## 9.4 协程是轻量级的
 
@@ -548,7 +525,6 @@ START: 21:22:28.913
 ```
 上面的程序在2s左右的时间内正确执行完毕。
 
-
 ## 9.5 协程 vs 守护线程
 
 在Java中有两类线程：用户线程 (User Thread)、守护线程 (Daemon Thread)。 
@@ -580,7 +556,6 @@ I'm sleeping 2 ...
 I'm sleeping 3 ...
 ```
 
-
 协程跟守护线程很像，用协程来写上面的逻辑，代码如下：
 
 ```
@@ -605,8 +580,6 @@ I'm sleeping 3 ...
 ```
 
 我们可以看出，活动的协程不会使进程保持活动状态。它们的行为就像守护程序线程。
-
-
 
 ## 9.6 协程执行的取消
 
@@ -648,8 +621,6 @@ main: Now I can quit.
 ```
 
 我们可以看出，当job还在运行时，isAlive是true，isCompleted是false。当调用job.cancel取消该协程任务，cancel函数本身返回true,  此时协程的打印动作就停止了。此时，job的状态是isAlive是false，isCompleted是true。 如果，再次调用job.cancel函数，我们将会看到cancel函数返回的是false。
-
-
 
 ### 9.6.1 计算代码的协程取消失效
 
@@ -765,7 +736,6 @@ main: Now I can quit.
 
 正如您所看到的, 现在这个循环可以被取消了。这里的isActive属性是CoroutineScope中的属性。这个接口的定义是：
 
-
 ```
 public interface CoroutineScope {
     public val isActive: Boolean
@@ -779,7 +749,6 @@ public interface CoroutineScope {
 #### 方法二： 循环调用一个挂起函数yield()
 
 该方法实质上是通过job的isCompleted状态值来捕获CancellationException完成取消功能。
-
 
 我们只需要在while循环体中循环调用yield()来检查该job的取消状态，如果已经被取消，那么isCompleted值将会是true，yield函数就直接抛出CancellationException异常，从而完成取消的功能：
 
@@ -817,7 +786,6 @@ job cancel2: false
 main: Now I can quit.
 ```
 
-
 如果我们想看看yield函数抛出的异常，我们可以加上try catch打印出日志：
 ```
 try {
@@ -828,7 +796,6 @@ try {
 ```
 
 我们可以看到类似：Job was cancelled 这样的信息。
-
 
 这个yield函数的实现是：
 ```
@@ -844,8 +811,6 @@ suspend fun yield(): Unit = suspendCoroutineOrReturn sc@ { cont ->
 ```
 
 如果调用此挂起函数时，当前协程的Job已经完成 (isActive = false, isCompleted = true)，当前协程将以CancellationException取消。
-
-
 
 ### 9.6.3 在finally中的协程代码
 
@@ -885,7 +850,6 @@ main: Now I can quit.
 
 我们可以看出，在调用cancel之后，就算当前协程任务Job已经结束了，`finally{...}`中的代码依然被正常执行。
 
-
 但是，如果我们在`finally{...}`中放入挂起函数：
 ```
     fun finallyCancelDemo() = runBlocking {
@@ -919,7 +883,6 @@ main: Now I can quit.
                 println("And I've delayed for 1 sec ?")
             }
 ```
-
 
 ### 9.6.4 协程执行不可取消的代码块
 
@@ -996,7 +959,6 @@ Exception in thread "main" kotlinx.coroutines.experimental.TimeoutException: Tim
 
 ```
 
-
 由 withTimeout 抛出的 TimeoutException 是 CancellationException 的一个子类。这个TimeoutException类型定义如下：
 ```
 private class TimeoutException(
@@ -1039,7 +1001,6 @@ private class TimeoutException(
     }
 
 ```
-
 
 如果需要依次调用它们, 我们只需要使用正常的顺序调用, 因为协同中的代码 (就像在常规代码中一样) 是默认的顺序执行。下面的示例通过测量执行两个挂起函数所需的总时间来演示:
 
@@ -1126,7 +1087,6 @@ public interface Deferred<out T> : Job {
 |isCancelled |如果当前延迟任务被取消，返回true|
 |suspend fun await() |等待此延迟任务完成，而不阻塞线程；如果延迟任务完成, 则返回结果值或引发相应的异常。|
 
-
 延迟任务对象Deferred的状态与对应的属性值如下表所示：
 
  | 状态  | isActive |isCompleted | isCompletedExceptionally | isCancelled |
@@ -1136,7 +1096,6 @@ public interface Deferred<out T> : Job {
 | _Resolved_  (最终状态)        | `false`    | `true`        | `false`                    | `false`       |
 | _Failed_    (最终状态)        | `false`    | `true`        | `true`                     | `false`       |
 | _Cancelled_ (最终状态)        | `false`    | `true`        | `true`                     | `true`        |
-
 
 ## 9.9 协程上下文与调度器
 
@@ -1189,7 +1148,6 @@ context: I'm working in thread Thread[main,5,main]
 继承了 runBlocking {...} 的context的协程继续在主线程中执行；
 而CommonPool在ForkJoinPool.commonPool中；
 我们使用newSingleThreadContext函数新建的协程上下文，该协程运行在自己的新线程Thread[MyOwnThread,5,main]中。
-
 
 另外，我们还可以在使用 runBlocking的时候显式指定上下文, 同时使用 run 函数来更改协程的上下文：
 
@@ -1282,7 +1240,6 @@ main: Who has survived request cancellation?
 
 通道跟阻塞队列一个关键的区别是：通道有挂起的操作, 而不是阻塞的, 同时它可以关闭。
 
-
 代码示例：
 
 ```
@@ -1309,7 +1266,6 @@ class ChannelsDemo {
     }
 }
 
-
 fun main(args: Array<String>) {
     val cd = ChannelsDemo()
     cd.testChannel()
@@ -1334,8 +1290,6 @@ Done!
 
 我们可以看出使用`Channel<Int>()`背后调用的是会合通道`RendezvousChannel()`，会合通道中没有任何缓冲区。send函数被挂起直到另外一个协程调用receive函数， 然后receive函数挂起直到另外一个协程调用send函数。它是一个完全无锁的实现。
 
-
-
 ###  9.10.2 关闭通道和迭代遍历元素
 
 与队列不同, 通道可以关闭, 以指示没有更多的元素。在接收端, 可以使用 for 循环从通道接收元素。代码示例：
@@ -1352,7 +1306,6 @@ Done!
         println("Done!")
     }
 ```
-
 
 其中， close函数在这个通道上发送一个特殊的 "关闭令牌"。这是一个幂等运算：对此函数的重复调用不起作用, 并返回 "false"。此函数执行后，`isClosedForSend`返回 "true"。但是, `ReceiveChannel`的`isClosedForReceive `在所有之前发送的元素收到之后才返回 "true"。
 
@@ -1388,7 +1341,6 @@ Before Close => isClosedForSend = false
 After Close => isClosedForSend = true
 Done!  => isClosedForReceive = true
 ```
-
 
 ### 9.10.3 生产者-消费者模式
 
@@ -1431,8 +1383,6 @@ public fun <E> produce(
 
 produce函数会启动一个新的协程,  协程中发送数据到通道来生成数据流，并以 ProducerJob对象返回对协程的引用。ProducerJob继承了Job, ReceiveChannel类型。
 
-
-
 ## 9.11 管道
 
 ### 9.11.1 生产无限序列
@@ -1473,7 +1423,6 @@ produce函数会启动一个新的协程,  协程中发送数据到通道来生�
 
 运行上面的代码，我们将会发现控制台在打印一个无限序列，完全没有停止的意思。
 
-
 ### 9.11.2 管道与无穷质数序列
 
 我们使用协程管道来生成一个无穷质数序列。
@@ -1497,7 +1446,6 @@ produce函数会启动一个新的协程,  协程中发送数据到通道来生�
     }
 ```
 
-
 现在我们通过从2开始, 从当前通道中取一个质数, 并为找到的每个质数启动新的管道阶段, 从而构建出我们的管道:
 
 ```
@@ -1518,12 +1466,9 @@ numbersFrom(2) -> filterPrimes(2) -> filterPrimes(3) -> filterPrimes(5) -> filte
     }
 ```
 
-
 运行上面的代码，我们将会看到控制台一直在无限打印出质数序列：
 
-
 ![螢幕快照 2017-07-14 01.41.41.png](http://upload-images.jianshu.io/upload_images/1233356-86fc0b9dc0126229.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 ### 9.11.3 通道缓冲区
 
@@ -1550,7 +1495,6 @@ Sending 2
 Sending 3
 Sending 4
 ```
-
 
 ## 9.12 构建无穷惰性序列
 
@@ -1611,7 +1555,6 @@ println(fibonacci.take(16).toList())
 
 一些 API 启动长时间运行的操作(例如网络 IO、文件 IO、CPU 或 GPU 密集型任务等)，并要求调用者阻塞直到它们完成。协程提供了一种避免阻塞线程并用更廉价、更可控的操作替代线程阻塞的方法：协程挂起。
 
-
 协程通过将复杂性放入库来简化异步编程。程序的逻辑可以在协程中顺序地表达，而底层库会为我们解决其异步性。该库可以将用户代码的相关部分包装为回调、订阅相关事件、在不同线程(甚至不同机器)上调度执行，而代码则保持如同顺序执行一样简单。
 
 ### 9.14.1 阻塞 vs 挂起
@@ -1621,7 +1564,6 @@ println(fibonacci.take(16).toList())
 另外，协程挂起几乎是无代价的。不需要上下文切换或者 OS 的任何其他干预。
 
 最重要的是，挂起可以在很大程度上由用户来控制，我们可以决定挂起时做些，并根据需求优化、记日志、拦截处理等。
-
 
 ## 9.15 协程的内部机制
 
@@ -1656,7 +1598,6 @@ kotlin.coroutines.experimental.intrinsics 带有甚至更底层的内在函数�
 
 suspendCoroutineOrReturn
 
-
 大多数基于协程的应用程序级API都作为单独的库发布：kotlinx.coroutines。这个库主要包括下面几大模块：
 
 - 使用 kotlinx-coroutines-core 的平台无关异步编程
@@ -1666,8 +1607,6 @@ suspendCoroutineOrReturn
 - 支持 RxJava：kotlinx-coroutines-rx
 
 这些库既作为使通用任务易用的便利的 API，也作为如何构建基于协程的库的端到端示例。关于这些 API 用法的更多细节可以参考相关文档。
-
-
 
 ## 本章小结
 

@@ -3,7 +3,6 @@
 
 >Kotlin is 100% interoperable with Java™ and Android™
 
-
 在前面的章节中，我们已经学习了Kotlin的基础语法、类型系统、泛型与集合类、面向对象与函数式编程等主题，在上一章中我们还看到了Kotlin提供的轻量级并发编程模型：协程的相关内容。
 
 从本章开始到在后面的章节中，我们将进入工程代码的实战。我们将在后面分别介绍Kotlin集成SpringBoot开发服务端Web项目、使用Kotlin开发Android项目，以及使用Kotlin来写前端JavaScript代码的等主题。
@@ -58,7 +57,6 @@ object OkhttpUtils {
 
 Kotlin调用Java代码跟Groovy一样流畅自如（但是不像Groovy那样“怎么写都对，但是一运行就报错”，因为Groovy是一门动态类型语言，而Kotlin则是一门强类型的静态类型语言）。我们基本不需要改变什么就可以直接使用Java中的API库。
 
-
 并且在 Java 代码中也可以很顺利地调用 Kotlin 代码：
 
 ```
@@ -87,9 +85,7 @@ public class JSONUtils {
 
 我们甚至也可以在一个项目中同时使用Kotlin和Java两 种语言混合编程。我们可以在下一章中看到，我们在一个SpringBoot工程中同时使用了Kotlin和Java两种语言进行混合开发。
 
-
 下面我们来继续介绍 Kotlin 调用 Java 代码的一些细节。
-
 
 ## Kotlin使用Java的集合类
 
@@ -226,8 +222,6 @@ println(setReturn)
 
 kotlin.Unit
 
-
-
 ## 空安全和平台类型
 
 我们知道Java 中的任何引用都可能是null，这样我们在使用 Kotlin调用来自 Java 的对象的时候就有可能会出现空安全的问题。
@@ -297,7 +291,6 @@ name?.substring(1)
 
 - `Array<(out) T>!`  :  表示“可空或者不可空的 T（或 T 的子类型）的 Java 数组”
 
-
 ## Kotlin与Java中的类型映射
 
 Kotlin 特殊处理一部分 Java 类型。这样的类型不是“按原样”从 Java 加载，而是 _映射_ 到相应的 Kotlin 类型。
@@ -345,7 +338,6 @@ Java 的装箱原始类型映射到对应的可空Kotlin 类型：
 | `java.lang.Double`      | `kotlin.Double?`  |
 | `java.lang.Boolean`     | `kotlin.Boolean?` |
 
-
 另外，用作类型参数的Java类型映射到Kotlin中的平台类型：
 例如，`List<java.lang.Integer>` 在 Kotlin 中会成为 `List<Int!>`。
 
@@ -363,15 +355,12 @@ Java 的装箱原始类型映射到对应的可空Kotlin 类型：
 | `Map<K, V>`          | `Map<K, V>`          | `MutableMap<K, V>`              | `(Mutable)Map<K, V>!`              |
 | `Map.Entry<K, V>`    | `Map.Entry<K, V>`    | `MutableMap.MutableEntry<K,V>` | `(Mutable)Map.(Mutable)Entry<K, V>!` |
 
-
-
 Java 的数组映射：
 
 | **Java 类型** | **Kotlin 类型**  |
 |---------------|------------------|
 | `int[]`       | `kotlin.IntArray!` |
 | `String[]`    | `kotlin.Array<(out) String>!` |
-
 
 ## Kotlin 中使用 Java 的泛型
 
@@ -383,11 +372,9 @@ Kotlin 的泛型与 Java 有点不同。当将 Java 类型导入 Kotlin 时，�
 |`Foo<? super Bar>`|`Foo<in Bar!>!`|同上|
 |`List<*>!`|          `List`|        Java的原始类型转换成星投影|
 
-
 和 Java 一样，Kotlin 在运行时不保留泛型，即对象不携带传递到他们构造器中的那些类型参数的实际类型。
 
 即 `ArrayList<Integer>()` 和 `ArrayList<Character>()` 是不能区分的。
-
 
 ## Kotlin与Java 中的数组
 
@@ -395,7 +382,6 @@ Kotlin 的泛型与 Java 有点不同。当将 Java 类型导入 Kotlin 时，�
 
 Java 平台上，持有原生数据类型的数组避免了装箱/拆箱操作的开销。
 在Kotlin中，对于每种原生类型的数组都有一个特化的类（`IntArray`、 `DoubleArray`、 `CharArray` 等）来实现同样的功能。它们与 `Array` 类无关，并且会编译成 Java 原生类型数组以获得最佳性能。
-
 
 ## Java 可变参数
 
@@ -436,17 +422,11 @@ class VarArgsDemoTest {
 ```
 运行输出：0123
 
-
-
-
-
 ## 非受检异常
 
 在 Kotlin 中，所有异常都是非受检的（Non-Checked Exceptions），这意味着编译器不会强迫你捕获其中的任何一个。而在Java中会要求我们捕获异常，例如下面的代码：
 
-
 ![螢幕快照 2017-07-15 01.43.16.png](http://upload-images.jianshu.io/upload_images/1233356-4e326702c6c87e20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 也就是说，我们需要写类似下面的` try catch `代码块：
 
@@ -474,7 +454,6 @@ com.easy.kotlin.CallingJavaNullSafe > testNonCheckedExceptions FAILED
 ```
 
 Kotlin的不受检异常，这样也会导致运行时抛出异常。关于异常的处理，该处理的终归还是要处理的。
-
 
 ## 对象方法
 
@@ -556,7 +535,6 @@ class C {
 }
 ```
 
-
 ## 访问静态成员
 
 Java 类的静态成员会形成该类的“伴生对象”。我们可以直接显式访问其成员。例如：
@@ -589,7 +567,6 @@ class JSONUtilsTest {
 ```
 
 上面我们提到过，如果是反过来调用，Java调用Kotlin中的object对象类中的函数，需要使用object的  `对象名.INSTANCE` 来调用函数。
-
 
 ## Kotlin与Java 的反射
 
@@ -640,11 +617,6 @@ java.util.Date arg0
 getCategory
 ```
 
-
-
-
-
-
 ## SAM 转换
 
 我们在Kotlin中，要某个函数做某件事时，会传一个函数参数给它。 而在Java中，并不支持传送函数参数。通常Java的实现方式是将动作放在一个实现某接口的类中，然后将该类的一个实例传递给另一个方法。在大多数情况下，这些接口只有单个抽象方法（single abstract method），在Java中被称为SAM类型。 
@@ -683,8 +655,6 @@ class SAMFunctionalInterfaceTest {
 
 还要注意，此功能只适用于 Java 互操作；因为 Kotlin 具有合适的函数类型，所以不需要将函数自动转换为 Kotlin 接口的实现。
 
-
-
 ## Java使用了Kotlin的关键字
 
 一些 Kotlin 关键字在 Java 中是有效标识符：*in*、 *object*、 *is*等等。
@@ -700,7 +670,6 @@ public class MathTools {
 }
 ```
 
-
 那么我们在Kotlin代码这样调用这个is方法：
 ```
 @RunWith(JUnit4::class)
@@ -710,8 +679,6 @@ class MathToolsTest {
     }
 }
 ```
-
-
 
 # Java 调用 Kotlin
 
@@ -820,14 +787,11 @@ Java调用Kotlin的测试代码：
     }
 ```
 
-
-
 ## Java调用Kotlin的包级函数
 
 在 `package com.easy.kotlin` 包内的 `KotlinExample.kt` 源文件中声明的所有的函数和属性，包括扩展函数，都将编译成一个名为 `com.easy.kotlin.KotlinExampleKt` 的 Java 类中的静态方法。
 
 代码示例：
-
 
 Kotlin的包级属性、函数代码：
 
@@ -958,7 +922,6 @@ error: cannot find symbol
 1 error
 ```
 
-
 在编程中，我们推荐使用Kotlin默认的命名生成规则。如果确实有特殊场景需要自定义Kotlin包级函数对应的生成Java类的名字，我们可以使用 `@JvmName` 注解修改生成的 Java 类的类名：
 
 ``` kotlin
@@ -979,7 +942,6 @@ fun f4() {
 }
 
 val p2: String = "PPP"
-
 
 ```
 测试代码：
@@ -1119,7 +1081,6 @@ Department.Companion.getInnerID()
 Department.innerName
 ```
 
-
 ## 静态方法
 
 Kotlin 中，我还可以将命名对象或伴生对象中定义的函数标注为 `@JvmStatic`，这样编译器既会在相应对象的类中生成静态方法，也会在对象自身中生成实例方法。
@@ -1178,7 +1139,6 @@ public final class Department {
 ```
 
 这些注解语法是编译器为了更加方便Java调用Kotlin代码提供的一些简便技巧。这样可使得Java中调用Kotlin代码更加自然优雅些。
-
 
 ## 可见性
 
@@ -1267,7 +1227,6 @@ public final class ProgrammingBook {
 
 我们可以看到Kotlin中的可见性跟Java中的基本相同。
 
-
 ## 生成默认参数值函数的重载
 
 我们在Kotlin中写一个有默认参数值的 Kotlin 方法，它会对每一个有默认值的参数都生成一个重载函数。这样的Kotlin函数，在 Java 中调用的话，只会有一个所有参数都存在的完整参数签名方法可见。如果我们希望Java像Kotlin中一样可以调用多个重载，可以使用`@JvmOverloads `注解。
@@ -1302,8 +1261,6 @@ class OverridesFunWithDefaultParams {
 
 这就是`@JvmOverloads`注解的作用，编译器会处理这个注解所标注的函数，并为之生成额外的重载函数给Java调用。
 
-
-
 ## 检查Kotlin中异常
 
 如上所述，Kotlin 没有受检异常。即像下面像这样的 Kotlin 函数：
@@ -1336,9 +1293,7 @@ class CheckKotlinException {
 
 然后，我们在Java中调用的时候，Java编译器就会检查这个异常：
 
-
 ![螢幕快照 2017-07-15 21.49.17.png](http://upload-images.jianshu.io/upload_images/1233356-29f3bdf573741b9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 最后，我们的代码就需要捕获该异常并处理它。
 
@@ -1360,7 +1315,6 @@ class CheckKotlinException {
     }
 }
 ```
-
 
 测试代码：
 ```
@@ -1412,7 +1366,6 @@ fun emptyList(): List<Nothing> = listOf()
 
 Kotlin中的`List<Nothing> ` 映射为原生类型`List` 。
 
-
 ## Kotlin与Java对比
 
 在前面的内容里，我们已经看到了Java与Kotlin的互操作的基本方式。为了更好的认识Java与Kotlin这两门语言，我们在这里给出一些基本功能，同时使用Java与Kotlin来实现的代码实例。通过横向对比，从中我们可以看出它们的异同。
@@ -1458,7 +1411,6 @@ final String name = "KotlinVSJava";
 var name = "KotlinVSJava"
 val name = "KotlinVSJava"
 ```
-
 
 ### null声明
 - Java
@@ -1517,7 +1469,6 @@ val message = "My name is: $firstName $lastName"
 
 Kotlin中使用`$`和`${}`（花括号里面是表达式的时候）占位符来实现字符串的拼接，这个比在Java中每次使用加号来拼接要方便许多。
 
-
 ### 换行
 - Java
 
@@ -1537,7 +1488,6 @@ val text = """
         """.trimMargin()
 ```
 
-
 ### 三元表达式
 - Java
 
@@ -1553,9 +1503,7 @@ val text = if (x > 5)
            else "x <= 5"
 ```
 
-
 ### 操作符
-
 
 - java
 
@@ -1577,7 +1525,6 @@ val rightShift = a shr 2
 val leftShift  = a shl 2
 ```
 
-
 ### 类型判断和转换（显式）
 - Java
 
@@ -1594,7 +1541,6 @@ if (object is Car) {
 }
 var car = object as Car
 ```
-
 
 ### 类型判断和转换 (隐式)
 - Java
@@ -1628,7 +1574,6 @@ if (score >= 0 && score <= 300) { }
 ```kotlin
 if (score in 0..300) { }
 ```
-
 
 ### 更灵活的case语句
 - Java
@@ -1677,7 +1622,6 @@ fun getGrade(score: Int): String {
 }
 ```
 
-
 ### for循环
 
 - Java
@@ -1715,7 +1659,6 @@ for (item in collection) { }
 
 for ((key, value) in map) { }
 ```
-
 
 ### 更方便的集合操作
 - Java
@@ -1794,7 +1737,6 @@ fun doSomething(vararg numbers: Int) {
    // 实现
 }
 ```
-
 
 ### 带返回值的方法（函数）
 - Java
@@ -1950,30 +1892,14 @@ public final class Developer {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 本章小结
 
 本章我们一起学习了Kotlin与Java的互操作，同时我们用一些简单的示例对比了它们的异同。在这之中，我们能感受到Kotlin的简洁、优雅。 我们可以用更少的代码来实现更多的功能。 另外，在IDEA中，我们可以直接使用Kotlin插件来直接进行Java代码与Kotlin代码之间的转换（虽然，有些情况下需要我们手工再去稍作改动）。
 
 Kotlin的定位本身之一就是官网首页重点强调的:100% interoperable with Java™。它并不是scala那样另起炉灶, 将类库（例如，集合类）都自己实现了一遍。kotlin是对现有Java的增强,通过扩展方法给java提供了很多诸如fp之类的特性, 但同时始终保持对java的兼容。
 
-
 而在Java生态领域最为人知的Spring框架，在最新的Spring 5中对Kotlin也作了支持（参看：https://spring.io/blog/2017/01/04/introducing-kotlin-support-in-spring-framework-5-0） 。 当前，作为Spring大家族中最引人注目的非Spring Boot莫属了。我们即将在下一章中介绍Kotlin集成Spring Boot来开发服务端Web项目。
-
 
 本章示例代码：
 
 https://github.com/EasyKotlin/chapter10_interoperability
-

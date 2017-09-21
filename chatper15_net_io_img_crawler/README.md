@@ -5,7 +5,6 @@
 
 本章我们就来介绍Kotlin 文件 IO 操作、正则表达式以及多线程相关的内容。
 
-
 ## 15.1 Kotlin IO 简介
 
 Kotlin的IO操作都在kotlin.io包下。Kotlin的原则就是Java已经有的，好用的就直接使用，没有的或者不好用的，就在原有类的基础上进行封装扩展，例如Kotlin 就给 File 类写了扩展函数。这跟Groovy的扩展API 的思想是一样的。
@@ -39,8 +38,6 @@ Kotlin 的封装终端IO 的类在 stdlib/src/kotlin/io/Console.kt 源文件中�
 
 ## 15.3 文件 IO 操作
 
-
-
 Kotlin为java.io.File提供了大量好用的扩展函数，这些扩展函数主要在下面三个源文件中：
 
 |kotlin/io/files/FileTreeWalk.kt|
@@ -58,8 +55,6 @@ Koltin 的序列化直接采用的 Java 的序列化类的类型别名：
 ```
 internal typealias Serializable = java.io.Serializable
 ```
-
-
 
 下面我们来简单介绍一下 Kotlin 文件读写操作。
 
@@ -117,7 +112,6 @@ internal typealias Serializable = java.io.Serializable
 
 和读文件类似，写入文件也很简单。我们可以写入字符串，也可以写入字节流。还可以直接使用Java的 Writer 或者 OutputStream。
 
-
 #### 覆盖写文件
 
 ```
@@ -144,13 +138,11 @@ internal typealias Serializable = java.io.Serializable
 
 ## 15.4 遍历文件树
 
-
 和Groovy一样，Kotlin也提供了方便的功能来遍历文件树。遍历文件树需要调用扩展方法walk()。它会返回一个FileTreeWalk对象，它有一些方法用于设置遍历方向和深度，详情参见FileTreeWalk API 文档说明。
 
 提示：FileTreeWalk API 文档链接 https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.io/-file-tree-walk/
 
 下面的例子遍历了指定文件夹下的所有文件。
-
 
 ```
     fun traverseFileTree(filename: String) {
@@ -177,7 +169,6 @@ internal typealias Serializable = java.io.Serializable
         return fileTreeWalk.iterator()
     }
 ```
-
 
 我们遍历当前文件下面所有子目录文件，还可以根据条件过滤，并把结果存入一个 Sequence<File> 中
 
@@ -218,9 +209,7 @@ fileSequence3: /Users/jack/kotlin/chapter15_file_io/./src/main/kotlin/com/easy/k
 fileSequence3: /Users/jack/kotlin/chapter15_file_io/./src/main/kotlin/com/easy/kotlin/fileio/KShellUtil.kt 
 fileSequence3: /Users/jack/kotlin/chapter15_file_io/./src/test/kotlin/com/easy/kotlin/fileio/KFileUtilTest.kt 
 
-
 ```
-
 
 ## 15.5 网络IO操作
 
@@ -236,7 +225,6 @@ fun getUrlContent(url: String): String {
     return URL(url).readText(Charset.defaultCharset())
 }
 ```
-
 
 根据 url 获取该 url 响应比特数组函数
 
@@ -261,8 +249,6 @@ fun writeUrlBytesTo(filename: String, url: String) {
 getUrlContent("https://www.baidu.com")
 ```
 
-
-
 下面这个例子根据 url 来获取一张图片的比特流，然后调用readBytes()方法读取到字节流并写入文件。
 
 ```
@@ -271,7 +257,6 @@ writeUrlBytesTo("图片.jpg", "http://n.sinaimg.cn/default/4_img/uplaod/3933d981
 ```
 
 在项目相应文件夹下我们可以看到下载好的 “图片.jpg” 。
-
 
 ##  15.6 kotlin.io标准库
 
@@ -334,19 +319,11 @@ fun File.copyRecursively(
 ): Boolean
 ```
 
-
-
-
-
 |提示： Kotlin 对 File 的扩展函数 API 文档https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.io/java.io.-file/index.html|
 |---|
 |关于 kotlin.io 下面的API文档在这里 https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.io/index.html|
 
-
-
-
 ## 15.7 执行Shell命令行
-
 
 我们使用 Groovy 的文件 IO 操作感觉非常好用，例如
 
@@ -427,9 +404,6 @@ println(text)
 
 实际上，通过之前的很多实例的学习，我们可以看出 Kotlin 的扩展函数相当实用。Kotlin 语言本身API 也大量使用了扩展功能。
 
-
-
-
 ## 15.8 正则表达式
 
 我们在 Kotlin 中除了仍然可以使用 Java中的 Pattern，Matcher 等类之外，Kotlin 还提供了一个正则表达式类 kotlin/text/regex/Regex.kt ，我们通过 Regex 的构造函数来创建一个正则表达式。
@@ -484,7 +458,6 @@ true
 true
 
 ```
-
 
 #### `containsMatchIn`
 输入字符串中至少有一个匹配就返回true，没有一个匹配就返回false。
@@ -550,7 +523,6 @@ kotlin.text.MatcherMatchResult@4d4436d0
 123
 ```
 
-
 #### `findAll`
 
 返回输入字符串中所有匹配的值的MatchResult的序列。
@@ -592,11 +564,6 @@ while (m.find()) {
 999
 ```
 
-
-
-
-
-
 ## 15.9 Kotlin 的多线程
 
 Kotlin中没有synchronized关键字。
@@ -604,7 +571,6 @@ Kotlin中没有volatile关键字。
 Kotlin的Any类似于Java的Object，但是没有wait()，notify()和notifyAll() 方法。
 
 那么并发如何在Kotlin中工作呢？放心，Kotlin 既然是站在 Java 的肩膀上，当然少不了对多线程编程的支持——Kotlin通过封装 Java 中的线程类，简化了我们的编码。同时我们也可以使用一些特定的注解， 直接使用 Java 中的同步关键字等。下面我们简单介绍一下使用Kotlin 进行多线程编程的相关内容。
-
 
 ### 15.9.1 创建线程
 
@@ -628,7 +594,6 @@ Kotlin的Any类似于Java的Object，但是没有wait()，notify()和notifyAll()
 
 此代码使用Kotlin的对象表达式创建一个匿名类并覆盖run()方法。 
 
-
 #### 使用 Lambda 表达式
 下面是如何将一个Runnable传递给一个新创建的Thread实例：
 
@@ -638,7 +603,6 @@ Kotlin的Any类似于Java的Object，但是没有wait()，notify()和notifyAll()
         println("B 使用 Lambda 表达式: ${Thread.currentThread()}")
     }).start()
 ```
-
 
 我们在这里看不到Runnable，在Kotlin中可以很方便的直接使用上面的Lambda表达式来表达。 
 
@@ -690,7 +654,6 @@ public fun thread(start: Boolean = true, isDaemon: Boolean = false, contextClass
 ```
 
 这只是一个非常方便的包装函数，简单实用。从上面的例子我们可以看出，Kotlin 通过扩展 Java 的线程 API，简化了样板代码。
-
 
 ### 15.9.2 同步方法和块
 
@@ -745,8 +708,6 @@ fun stop() {
 
 @Volatile会将JVM备份字段标记为volatile。
 
-
-
 当然，在 Kotlin 中我们有更好用的协程并发库。在代码工程实践中，我们可以根据实际情况自由选择。
 
 ## 本章小结
@@ -755,15 +716,9 @@ Kotlin 是一门工程实践性很强的语言，从本章介绍的文件IO、�
 
 本章示例代码：https://github.com/EasyKotlin/chapter15_file_io
 
-
 另外，笔者综合了本章的内容，使用 SpringBoot + Kotlin 写了一个简单的图片爬虫 Web 应用，感兴趣的读者可参考源码：https://github.com/EasyKotlin/chatper15_net_io_img_crawler
 
-
-
 在下一章，也我们的最后一章中，让我们脱离 JVM，直接使用 Kotlin Native 来开发一个直接编译成机器码运行的 Kotlin 应用程序。
-
-
-
 
 --------------------------------------
 
