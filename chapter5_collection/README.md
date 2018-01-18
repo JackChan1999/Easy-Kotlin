@@ -782,9 +782,9 @@ null
 null
 ```
 
-### 5.3.5 List集合类的`any` `all ``none ``count ``reduce ``fold ``max ``min` `sum` 函数算子(operator)
+### 5.3.5 List集合类的 any、all 、none、count、reduce、fold、max 、min、sum 函数算子(operator)
 
-#### `any() `判断集合至少有一个元素
+#### any() 判断集合至少有一个元素
 
 这个函数定义如下：
 
